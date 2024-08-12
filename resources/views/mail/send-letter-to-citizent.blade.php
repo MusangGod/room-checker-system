@@ -1,0 +1,1 @@
+Halo pak/bu {{ $name }}, surat dengan kode #{{ $code }} telah {{ $status }}

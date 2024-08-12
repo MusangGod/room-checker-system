@@ -35,18 +35,9 @@ class StorePostRequest extends FormRequest
             // Aturan untuk field "tag_ids": wajib diisi dan harus berupa array
             "tag_ids" => "required|array",
             // Aturan untuk setiap elemen dalam array "tag_ids": wajib diisi dan harus berupa integer
-            "tag_ids.*" => "required|integer"
+            "tag_ids.*" => "required|integer",
+            // Aturan untuk field "image_path": wajib diisi, harus berupa gambar, maximal size 5000mb dan format harus png,jpg,jpeg,webp atau gif
+            "image_path" => "required|image|max:5000|mimes:png,jpg,jpeg,webp,svg",
         ];
-    }
-
-    // Menangani validasi yang gagal
-    public function failedValidation(Validator $validator)
-    {
-        // Melempar HttpResponseException dengan respons JSON yang berisi pesan error dan detail kesalahan validasi
-        throw new HttpResponseException(response()->json([
-            'success' => false, // Menandakan bahwa request tidak berhasil
-            'message' => 'Validation errors', // Pesan umum untuk kesalahan validasi
-            'data' => $validator->errors() // Detail kesalahan validasi
-        ]));
     }
 }

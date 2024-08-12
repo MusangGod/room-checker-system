@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
-use App\Interfaces\UserRepositoryInterface;
+use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\PostRepositoryInterface;
+use App\Interfaces\StaffRepositoryInterface;
 use App\Interfaces\TagRepositoryInterface;
-use App\Repositories\UserRepository;
+use App\Repositories\AdminRepository;
 use App\Repositories\PostRepository;
+use App\Repositories\StaffRepository;
 use App\Repositories\TagRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,12 +24,12 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         // Mendaftarkan PostRepositoryInterface untuk diimplementasikan oleh PostRepository
         $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
-    
         // Mendaftarkan TagRepositoryInterface untuk diimplementasikan oleh TagRepository
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
-    
-        // Mendaftarkan UserRepositoryInterface untuk diimplementasikan oleh UserRepository
-        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        // Mendaftarkan AdminRepositoryInterface untuk diimplementasikan oleh AdminRepository
+        $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
+        // Mendaftarkan StaffRepositoryInterface untuk diimplementasikan oleh StaffRepository
+        $this->app->bind(StaffRepositoryInterface::class, StaffRepository::class);
     }
     
 

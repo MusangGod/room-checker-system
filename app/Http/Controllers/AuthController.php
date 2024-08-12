@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\AuthResource;
 use App\Interfaces\UserRepositoryInterface;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,57 +15,33 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    // Konstruktor untuk menginisialisasi UserRepositoryInterface yang hanya bisa dibaca
-    public function __construct(
-        private readonly UserRepositoryInterface $userRepositoryInterface
-    ) {}
+    public function loginView()
+    {
+        return view('auth.login');
+    }
 
-    // Metode untuk melakukan login
     public function login(LoginRequest $request)
     {
         try {
-            // Memeriksa kredensial pengguna menggunakan email dan password
             if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-                // Mengembalikan respons API jika login berhasil
-                return ApiResponse::sendResponse(new AuthResource([
-                    "user" => $user,
-                    "token" => $token,
-                    "token_type" => "Bearer",
-                ]),'Login berhasil', 200);
+                // Mengembalikan respons jika login berhasil
+                return redirect()->route("dashboard")->with('success', 'Login success! Welcome back ' . auth()->user()->username);
             } else {
-                // Mengembalikan respons API jika email atau password salah
-                return ApiResponse::sendResponse(null,"Email atau password salah", 400);
-            }
-        } catch(\Exception $ex){
-            // Mengembalikan respons rollback jika terjadi kesalahan
-            return ApiResponse::rollback($ex);
+                // Mengembalikan respons jika email atau password salah
+                return back()->with('error', "Email or password is incorrect");
+            }         
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Login failed!');
         }
     }
 
-    // Metode untuk registrasi pengguna baru
-    public function register(RegisterRequest $request)
+    public function logout(Request $request)
     {
-        // Memulai transaksi database
-        DB::beginTransaction();
-        try{
-            // Menyimpan data pengguna baru melalui UserRepositoryInterface
-            $user = $this->userRepositoryInterface->store($request->validated());
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-            // Melakukan commit pada transaksi jika berhasil
-            DB::commit();
-            return ApiResponse::sendResponse(new AuthResource($user),'Registrasi berhasil', 201);
-
-        }catch(\Exception $ex){
-            // Mengembalikan respons rollback jika terjadi kesalahan
-            return ApiResponse::rollback($ex);
-        }
-    }
-
-    // Metode untuk menangani pengguna yang tidak login
-    public function userNotLoggedIn()
-    {
-        // Mengembalikan respons API jika pengguna tidak login
-        return ApiResponse::sendResponse(null, "Akses anda ditolak! Anda belum melakukan login", 401);
+        return redirect()->route("login"); 
     }
 }
 

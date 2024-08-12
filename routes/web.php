@@ -1,39 +1,51 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 // Mengelompokkan Routes yang menggunakan AuthController
-Route::controller(AuthController::class)->prefix('auth')->group(function() {
+Route::controller(AuthController::class)->middleware('guest')->prefix('auth')->group(function() {
     // Route untuk view login
     Route::get("/login", "loginView")->name("login");
     // Route untuk proses login
     Route::post("/login", "login")->name('login.post');
 
-    // Route untuk view pendaftaran (registrasi)
-    Route::post("/register", "registerView")->name('register');
-    // Route untuk proses pendaftaran (registrasi)
-    Route::post("/register", "register")->name('register.post');
+    Route::controller(ForgotPasswordController::class)->group(function () {
+        Route::get('forgot-password', 'forgotPassword')->name('forgot-password');
+        Route::post('forgot-password', 'forgotPasswordForm')->name('forgot-password.post');
+        Route::get('reset-password/{token}', 'resetPassword')->name('reset-password');
+        Route::post('reset-password', 'resetPasswordForm')->name('reset-password.post');
+    });
 });
 
-// Route untuk modul post (index, show)
-// Menggunakan resource untuk CRUD kecuali operasi store, update, dan delete
-Route::resource("posts", PostController::class)->except("store", "update", "delete");
-
-// Route untuk modul tag (index, show)
-// Menggunakan resource untuk CRUD kecuali operasi store, update, dan delete
-Route::resource("tags", TagController::class)->except("store", "update", "delete");
-
 // Mengelompokkan Routes yang memerlukan autentikasi menggunakan middleware auth
-Route::middleware(["auth"])->group(function() {
-    // Route untuk modul post (create, update, delete)
-    // Menggunakan resource untuk CRUD kecuali operasi index dan show
-    Route::resource("posts", PostController::class)->except("index", "show");
-    // Route untuk mengupload gambar pada post
-    Route::post("posts/{post}/upload-image", [PostController::class, 'uploadImage']);
-    // Route untuk modul tag (create, update, delete)
-    // Menggunakan resource untuk CRUD kecuali operasi index dan show
-    Route::resource("tags", TagController::class)->except("index", "show");
+Route::middleware(["auth"])->prefix('/dashboard')->group(function() {
+    // Route untuk dashboard
+    Route::get("/", DashboardController::class)->name('dashboard');
+    // Route untuk modul post
+    // Menggunakan resource untuk CRUD
+    Route::resource("posts", PostController::class);
+    // Route untuk modul tag
+    // Menggunakan resource untuk CRUD
+    Route::resource("tags", TagController::class);
+    // Route untuk modul admin
+    // Menggunakan resource untuk CRUD
+    Route::resource("admins", AdminController::class);
+    Route::get("admins/{admin}/json", [AdminController::class, 'showJSON']);
+    // Route untuk modul staff
+    // Menggunakan resource untuk CRUD
+    Route::resource("staffs", TagController::class);
+
+});
+Route::middleware('auth')->group(function() {
+    Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::fallback(function() {
+    return view("errors.404");
 });

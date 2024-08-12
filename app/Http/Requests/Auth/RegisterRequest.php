@@ -36,15 +36,4 @@ class RegisterRequest extends FormRequest
             "password" => "required|min:6"
         ];
     }
-
-    // Menangani validasi yang gagal
-    public function failedValidation(Validator $validator)
-    {
-        // Melempar HttpResponseException dengan respons JSON yang berisi pesan error dan detail kesalahan validasi
-        throw new HttpResponseException(response()->json([
-            'success' => false, // Menandakan bahwa request tidak berhasil
-            'message' => 'Validation errors', // Pesan umum untuk kesalahan validasi
-            'data' => $validator->errors() // Detail kesalahan validasi
-        ]));
-    }
 }

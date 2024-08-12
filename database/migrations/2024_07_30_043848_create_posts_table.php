@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("slug");
             $table->longText("content");
             $table->string("image_path")->nullable();
-            $table->enum("status", ["draft", "published"]);
+            $table->smallInteger("status");
             $table->timestamps();
             $table->softDeletes();
         });
