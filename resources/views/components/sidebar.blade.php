@@ -23,7 +23,7 @@
             </li>
             <!-- Dashboards -->
             <li class="w-full">
-                <a href="{{ route('dashboard') }}" class="side-link  {{ Request::is('dashboard*') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="side-link  {{ Request::is('dashboard') ? 'active' : '' }}">
                     <span class="icon-sidebar-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
                             fill="none">
@@ -36,13 +36,14 @@
                 </a>
             </li>
             
-            @if (auth()->user()->role == $current_user)
+            @if ($current_user !== App\Enums\Role::STAFF)
                 <!-- Pengguna -->
                 <li class="px-4 w-full">
                     <div class="text-sm pb-2 border-b border-b-[#1414141F] text-[#14141485] w-full">
                         Pengguna
                     </div>
                 </li>
+                @if ($current_user === App\Enums\Role::SUPER_ADMIN)
                 <!-- Admin -->
                 <li class="w-full">
                     <a href="{{ route('admins.index') }}" class="side-link  {{ Request::is('dashboard/admins*') ? 'active' : '' }}">
@@ -57,6 +58,7 @@
                         <span data-i18n="Admins" class="text-[#28242185]">Admin</span>
                     </a>
                 </li>
+                @endif
                 <!-- Staff -->
                 <li class="w-full">
                     <a href="{{ route('staffs.index') }}" class="side-link  {{ Request::is('dashboard/staffs*') ? 'active' : '' }}">

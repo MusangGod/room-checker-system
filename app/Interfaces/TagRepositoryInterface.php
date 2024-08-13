@@ -2,6 +2,8 @@
 
 namespace App\Interfaces;
 
+use App\Models\Tag;
+
 // Interface: Menyediakan kontrak atau blueprint yang harus diikuti oleh kelas yang mengimplementasikannya.
 interface TagRepositoryInterface
 {
@@ -15,7 +17,7 @@ interface TagRepositoryInterface
     public function store(array $data);
 
     // Mendeklarasikan fungsi untuk memperbarui tag berdasarkan ID
-    public function update(array $data, $id);
+    public function update(array $data, Tag $tag);
 
     // Mendeklarasikan fungsi untuk menghapus tag berdasarkan ID
     public function delete($id);

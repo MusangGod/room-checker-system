@@ -40,7 +40,7 @@ id="layout-navbar">
                         </div>
                     </a>
                 </li>
-                {{-- <li>
+                <li>
                     <a class="dropdown-item" href="{{ route('profile.index') }}">
                         @csrf
                         <i class="bx bx-user-circle me-2"></i>
@@ -48,7 +48,7 @@ id="layout-navbar">
                             Profile
                         </button>
                     </a>
-                </li> --}}
+                </li>
                 <li>
                     <form class="dropdown-item" action="{{ route('logout') }}" method="POST">
                         @csrf

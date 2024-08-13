@@ -6,10 +6,12 @@ use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\PostRepositoryInterface;
 use App\Interfaces\StaffRepositoryInterface;
 use App\Interfaces\TagRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\AdminRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\StaffRepository;
 use App\Repositories\TagRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -30,6 +32,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
         // Mendaftarkan StaffRepositoryInterface untuk diimplementasikan oleh StaffRepository
         $this->app->bind(StaffRepositoryInterface::class, StaffRepository::class);
+        // Mendaftarkan UserRepositoryInterface untuk diimplementasikan oleh UserRepository
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
     
 

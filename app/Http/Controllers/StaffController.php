@@ -51,7 +51,7 @@ class StaffController extends Controller
             $newStaff = $request->validated();
             $newStaff["status"] = $request->status == 'on' ? true : false;
 
-            $filename = $this->uploadFile->uploadSingleFile($newStaff["image_path"], "staffs");
+            $filename = $this->uploadFile->uploadSingleFile($newStaff["image_path"], "users");
             $newStaff["image_path"] = $filename;
 
             $newStaff["role"] = Role::STAFF;
@@ -112,7 +112,7 @@ class StaffController extends Controller
             if($request->has('image_path')) {
                 $this->uploadFile->deleteExistFile($staff->user->image_path);
 
-                $filename = $this->uploadFile->uploadSingleFile($updateStaff["image_path"], "staffs");
+                $filename = $this->uploadFile->uploadSingleFile($updateStaff["image_path"], "users");
                 $updateStaff["image_path"] = $filename;
             }
 

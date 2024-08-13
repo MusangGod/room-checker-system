@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPassword\ResetPasswordRequest;
 use App\Http\Requests\ForgotPassword\StoreForgotPasswordRequest;
 use App\Mail\ForgotPasswordMail;
-use App\Models\PasswordReset;
+use App\Models\PasswordResetToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +24,7 @@ class ForgotPasswordController extends Controller
     {
         try {
             $token = Str::random(64);
-            PasswordReset::create([
+            PasswordResetToken::create([
                 'email' => $request->email,
                 'token' => $token,
             ]);
@@ -40,7 +40,7 @@ class ForgotPasswordController extends Controller
 
     public function resetPassword($token)
     {
-        $user = PasswordReset::where('token', $token)->first();
+        $user = PasswordResetToken::where('token', $token)->first();
         if ($user) {
             return view('auth.reset-password', [
                 'token' => $token,
@@ -53,9 +53,9 @@ class ForgotPasswordController extends Controller
     public function resetPasswordForm(ResetPasswordRequest $request)
     {
         try {
-            $userResetPass = PasswordReset::where('token', $request->token)->first();
+            $userResetPass = PasswordResetToken::where('token', $request->token)->first();
 
-            $updatePassword = PasswordReset::where([
+            $updatePassword = PasswordResetToken::where([
                 'email' => $userResetPass->email,
                 'token' => $request->token
             ])->first();
@@ -67,7 +67,7 @@ class ForgotPasswordController extends Controller
             $auth = User::where('email', $userResetPass->email)
                 ->update(['password' => bcrypt($request->password)]);
 
-            PasswordReset::where(['email' => $userResetPass->email])->delete();
+            PasswordResetToken::where(['email' => $userResetPass->email])->delete();
 
             return redirect(route('login'))->with('success', 'Your password has been changed!');
         } catch (\Exception $e) {

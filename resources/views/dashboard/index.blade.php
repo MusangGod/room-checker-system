@@ -186,7 +186,7 @@
 			colors:['#6562E8', '#7D7AFF'],
 
 			series: [{
-				name: 'Surat',
+				name: 'Postingan',
 				data: post_yearly
 			}],
 			xaxis: {
@@ -213,10 +213,10 @@
 					// borderRadiusApplication: 'end',
 				},
 			},
-			colors:['#5F84E9E5'],
+			colors:['#6562E8', '#7D7AFF'],
 
 			series: [{
-				name: 'Surat',
+				name: 'Postingan',
 				data: post_monthly
 			}],
 			xaxis: {
@@ -243,10 +243,10 @@
 					// borderRadiusApplication: 'end',
 				},
 			},
-			colors:['#5F84E9E5'],
+			colors:['#6562E8', '#7D7AFF'],
 
 			series: [{
-				name: 'Surat',
+				name: 'Postingan',
 				data: post_weekly
 			}],
 			xaxis: {

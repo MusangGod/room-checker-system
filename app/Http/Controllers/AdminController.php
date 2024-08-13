@@ -52,7 +52,7 @@ class AdminController extends Controller
             $newAdmin = $request->validated();
             $newAdmin["status"] = $request->status == 'on' ? true : false;
 
-            $filename = $this->uploadFile->uploadSingleFile($newAdmin["image_path"], "admins");
+            $filename = $this->uploadFile->uploadSingleFile($newAdmin["image_path"], "users");
             $newAdmin["image_path"] = $filename;
 
             $newAdmin["role"] = Role::ADMIN;
@@ -134,7 +134,7 @@ class AdminController extends Controller
             if($request->has('image_path')) {
                 $this->uploadFile->deleteExistFile($admin->user->image_path);
 
-                $filename = $this->uploadFile->uploadSingleFile($updateAdmin["image_path"], "admins");
+                $filename = $this->uploadFile->uploadSingleFile($updateAdmin["image_path"], "users");
                 $updateAdmin["image_path"] = $filename;
             }
 

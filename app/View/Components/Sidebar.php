@@ -24,7 +24,7 @@ class Sidebar extends Component
     {
         if(auth()->user()->role->value == 1) {
             $current_user = Role::SUPER_ADMIN;
-        } else if(auth()->user()->role->value == 1) {
+        } else if(auth()->user()->role->value == 2) {
             $current_user = Role::ADMIN;
         } else {
             $current_user = Role::STAFF;

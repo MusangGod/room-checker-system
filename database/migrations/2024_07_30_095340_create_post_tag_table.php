@@ -14,6 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('post_tag', function (Blueprint $table) {
+            $table->id();
             $table->string("post_id");
             $table->string("tag_id");
         });

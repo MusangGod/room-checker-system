@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use App\Interfaces\PostRepositoryInterface;
+use App\Interfaces\TagRepositoryInterface;
 use App\Models\Post;
-use App\Models\Tag;
 use App\Utils\UploadFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -16,6 +16,7 @@ class PostController extends Controller
     // Constructor agar kita bisa menggunakan dependency injection untuk class PostRepositoryInterface
     public function __construct(
         private readonly PostRepositoryInterface $postRepositoryInterface,
+        private readonly TagRepositoryInterface $tagRepositoryInterface,
         private readonly UploadFile $uploadFile
     ) {}
 
@@ -36,7 +37,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = Tag::latest()->get();
+        $tags = $this->tagRepositoryInterface->getAll();
         return view('dashboard.posts.create', compact('tags'));
     }
 
@@ -45,7 +46,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $tags = Tag::latest()->get();
+        $tags = $this->tagRepositoryInterface->getAll();
         return view('dashboard.posts.edit', compact('post', 'tags'));
     }
 

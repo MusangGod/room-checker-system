@@ -24,10 +24,26 @@ class TagController extends Controller
     public function index()
     {
         // Mengambil semua data tag melalui repository
-        $data = $this->tagRepositoryInterface->getAll();
-        
+        $tags = $this->tagRepositoryInterface->getAll();
+
         // Mengirim respon sukses dengan data tag
-        return ApiResponse::sendResponse(TagResource::collection($data), 'Berhasil mengambil semua data tag', 200);
+        return view('dashboard.tags.index', compact('tags'));
+    }
+
+    /**
+     * Menampilkan view create tag
+     */
+    public function create()
+    {
+        return view('dashboard.tags.create');
+    }
+
+    /**
+     * Menampilkan view edit tag
+     */
+    public function edit(Tag $tag)
+    {
+        return view('dashboard.tags.edit', compact('tag'));
     }
 
     /**
@@ -42,17 +58,18 @@ class TagController extends Controller
             $newTag = $request->validated();
             // Mengatur slug berdasarkan nama tag
             $newTag["slug"] = str()->slug($newTag["name"]);
-
             // Menyimpan tag baru melalui repository
-            $tag = $this->tagRepositoryInterface->store($newTag);
+            $post = $this->tagRepositoryInterface->store($newTag);
 
             // Komit transaksi jika berhasil
             DB::commit();
-            // mengembalikan response "Tag berhasil ditambahkan" beserta data tag yang ditambahkan
-            return ApiResponse::sendResponse(new TagResource($tag), 'Tag berhasil ditambahkan', 201);
+            // mengembalikan response "Tag berhasil ditambahkan"
+            return redirect()->route("tags.index")->with('success', 'Tag berhasil ditambahkan');
         } catch (\Exception $ex) {
             // Rollback transaksi jika terjadi kesalahan
-            return ApiResponse::rollback($ex);
+            DB::rollBack();
+            logger($ex->getMessage());
+            return back()->with('error', 'Tag gagal ditambahkan');
         }
     }
 
@@ -66,10 +83,12 @@ class TagController extends Controller
             $tag = $this->tagRepositoryInterface->getById($id);
 
             // Mengirim respon sukses dengan data tag
-            return ApiResponse::sendResponse(new TagResource($tag), 'Berhasil mengambil detail tag', 200);
+            return view('dashboard.tags.show', compact('tag'));
         } catch (\Exception $ex) {
             // Mengirim respon error jika terjadi kesalahan
-            return ApiResponse::sendResponse($ex, 'Tag tidak ditemukan', 400);
+            DB::rollBack();
+            logger($ex->getMessage());
+            return abort(404);
         }
     }
 
@@ -87,15 +106,17 @@ class TagController extends Controller
             $updateTag["slug"] = str()->slug($updateTag["name"]);
 
             // Memperbarui tag melalui repository
-            $tag = $this->tagRepositoryInterface->update($updateTag, $tag->id);
+            $tag = $this->tagRepositoryInterface->update($updateTag, $tag);
 
             // Komit transaksi jika berhasil
             DB::commit();
-            // mengembalikan response "berhasil update tag" beserta data tag yang diupdate
-            return ApiResponse::sendResponse($tag, 'Berhasil update tag', 200);
+            // mengembalikan response "Tag berhasil diupdate"
+            return redirect()->route("tags.index")->with('success', 'Tag berhasil diupdate');
         } catch (\Exception $ex) {
             // Rollback transaksi jika terjadi kesalahan
-            return ApiResponse::rollback($ex);
+            DB::rollBack();
+            logger($ex->getMessage());
+            return back()->with('error', 'Tag gagal diupdate');
         }
     }
 
@@ -112,11 +133,13 @@ class TagController extends Controller
 
             // Komit transaksi jika berhasil
             DB::commit();
-            // mengembalikan response "berhasil menghapus tag" beserta data tag yang dihapus
-            return ApiResponse::sendResponse($tag, 'Berhasil menghapus tag', 200);
+            // mengembalikan response "Tag berhasil dihapus"
+            return redirect()->route("tags.index")->with('success', 'Tag berhasil dihapus');
         } catch (\Exception $ex) {
             // Rollback transaksi jika terjadi kesalahan
-            return ApiResponse::rollback($ex);
+            DB::rollBack();
+            logger($ex->getMessage());
+            return back()->with('error', 'Tag gagal dihapus');
         }
     }
 }
