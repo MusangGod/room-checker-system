@@ -1,1 +1,0 @@
-Halo pak/bu {{ $name }}, ada surat baru dari warga dengan kode #{{ $code }}

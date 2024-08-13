@@ -6,6 +6,8 @@ use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use App\Interfaces\PostRepositoryInterface;
 use App\Models\Post;
+use App\Models\Tag;
+use App\Utils\UploadFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -13,9 +15,9 @@ class PostController extends Controller
 {
     // Constructor agar kita bisa menggunakan dependency injection untuk class PostRepositoryInterface
     public function __construct(
-        private readonly PostRepositoryInterface $postRepositoryInterface
-    ) {
-    }
+        private readonly PostRepositoryInterface $postRepositoryInterface,
+        private readonly UploadFile $uploadFile
+    ) {}
 
     /**
      * Menampilkan daftar resource (postingan).
@@ -26,7 +28,25 @@ class PostController extends Controller
         $posts = $this->postRepositoryInterface->getAll();
 
         // Mengirim respon sukses dengan data postingan
-        return view('posts.index', compact('posts'));
+        return view('dashboard.posts.index', compact('posts'));
+    }
+
+    /**
+     * Menampilkan view create post
+     */
+    public function create()
+    {
+        $tags = Tag::latest()->get();
+        return view('dashboard.posts.create', compact('tags'));
+    }
+
+    /**
+     * Menampilkan view edit post
+     */
+    public function edit(Post $post)
+    {
+        $tags = Tag::latest()->get();
+        return view('dashboard.posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -43,6 +63,9 @@ class PostController extends Controller
             $newPost["slug"] = str()->slug($newPost["title"]);
             // Menyimpan ID pengguna yang sedang login
             $newPost["user_id"] = auth()->id();
+
+            $filename = $this->uploadFile->uploadSingleFile($newPost["image_path"], "posts");
+            $newPost["image_path"] = $filename;
 
             // Menyimpan postingan baru melalui repository
             $post = $this->postRepositoryInterface->store($newPost);
@@ -69,7 +92,7 @@ class PostController extends Controller
             $post = $this->postRepositoryInterface->getById($id);
 
             // Mengirim respon sukses dengan data postingan
-            return view('posts.show', compact('post'));
+            return view('dashboard.posts.show', compact('post'));
         } catch (\Exception $ex) {
             // Mengirim respon error jika terjadi kesalahan
             DB::rollBack();
@@ -91,6 +114,13 @@ class PostController extends Controller
             // Mengatur slug berdasarkan judul postingan
             $updatePost["slug"] = str()->slug($updatePost["title"]);
 
+            if($request->has('image_path')) {
+                $this->uploadFile->deleteExistFile($post->image_path);
+
+                $filename = $this->uploadFile->uploadSingleFile($updatePost["image_path"], "posts");
+                $updatePost["image_path"] = $filename;
+            }
+
             // Memperbarui postingan melalui repository
             $post = $this->postRepositoryInterface->update($updatePost, $post);
 
@@ -105,42 +135,6 @@ class PostController extends Controller
             return back()->with('error', 'Postingan gagal diupdate');
         }
     }
-
-    /**
-     * Mengunggah gambar untuk resource yang ditentukan (postingan).
-     */
-    // public function uploadImage(UploadImageRequest $request, Post $post)
-    // {
-    //     // Memulai transaksi database
-    //     DB::beginTransaction();
-    //     try {
-    //         // Memvalidasi request dan menyimpan data yang diupdate ke dalam variabel
-    //         $updatePost = $request->validated();
-    //         // Jika ada gambar yang diunggah
-    //         if ($request->image_path) {
-    //             // Jika gambar lama ada, maka dihapus
-    //             if (File::exists($post->image_path)) {
-    //                 File::delete($post->image_path);
-    //             }
-
-    //             // Menyimpan gambar baru dengan nama unik
-    //             $filename = 'uploads/posts/' . time() . '-' . $request->image_path->getClientOriginalName();
-    //             $request->image_path->move('uploads/posts', $filename);
-    //             $updatePost["image_path"] = $filename;
-    //         }
-
-    //         // Memperbarui postingan dengan gambar baru melalui repository
-    //         $post = $this->postRepositoryInterface->update($updatePost, $post->id);
-
-    //         // Komit transaksi jika berhasil
-    //         DB::commit();
-    //         // mengembalikan response "Berhasil update gambar postingan" beserta data gambar postingan yang diupdate
-    //         return ApiResponse::sendResponse($post, 'Berhasil update gambar postingan', 200);
-    //     } catch (\Exception $ex) {
-    //         // Rollback transaksi jika terjadi kesalahan
-    //         return ApiResponse::rollback($ex);
-    //     }
-    // }
 
     /**
      * Menghapus resource yang ditentukan (postingan).

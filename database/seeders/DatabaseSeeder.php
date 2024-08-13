@@ -83,7 +83,9 @@ class DatabaseSeeder extends Seeder
             "name" => "Academic",
             "slug" => "academic"
         ]);
+
+        $get_tags = Tag::all()->pluck('id');
         
-        $post->tags()->attach([1, 2]);
+        $post->tags()->attach($get_tags);
     }
 }
