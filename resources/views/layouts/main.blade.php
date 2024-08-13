@@ -166,6 +166,12 @@
                 toastr.error("{{ session('error') }}");
             @endif
 
+            const previewImg = (input_img, preview_img) => {
+                $(`.${input_img}`).change(function() {
+                    $(`.${preview_img}`).attr("src", URL.createObjectURL($(`.${input_img}`)[0].files[0]))
+                })
+            }
+
             $(document).ready(function() {
                 $('.dataTable').DataTable();
             });

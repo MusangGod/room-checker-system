@@ -4,7 +4,7 @@
 
             <a href="#" class="flex justify-center w-full text-[20px] font-bold">
                 {{-- <img src=" {{ asset('assets/img/sidebar/logo.svg') }}" alt=""> --}}
-                Simpel Bertaksu
+                Laravel Template
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">

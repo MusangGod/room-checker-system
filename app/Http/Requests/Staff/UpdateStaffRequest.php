@@ -27,8 +27,8 @@ class UpdateStaffRequest extends FormRequest
     {
         return [
             "name" => "required",
-            "username" => "required|alpha_dash|unique:users,username," . $this->staff->id,
-            "email" => "required|email|unique:users,email," . $this->staff->id,
+            "username" => "required|alpha_dash|unique:users,username," . $this->staff->user->id,
+            "email" => "required|email|unique:users,email," . $this->staff->user->id,
             "password" => "nullable|min:6",
             "image_path" => "nullable|image|max:5000|mimes:png,jpg,jpeg,webp,svg",
         ];

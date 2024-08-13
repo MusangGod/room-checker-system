@@ -5,6 +5,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +40,7 @@ Route::middleware(["auth"])->prefix('/dashboard')->group(function() {
     Route::get("admins/{admin}/json", [AdminController::class, 'showJSON']);
     // Route untuk modul staff
     // Menggunakan resource untuk CRUD
-    Route::resource("staffs", TagController::class);
+    Route::resource("staffs", StaffController::class);
 
 });
 Route::middleware('auth')->group(function() {
