@@ -44,6 +44,7 @@ class StaffController extends Controller
      */
     public function store(StoreStaffRequest $request)
     {
+//        dd($request);
         // Memulai transaksi database
         DB::beginTransaction();
         try {
@@ -55,7 +56,7 @@ class StaffController extends Controller
             $newStaff["image_path"] = $filename;
 
             $newStaff["role"] = Role::STAFF;
-            
+
             // Menyimpan staff baru melalui repository
             $staff = $this->staffRepositoryInterface->store($newStaff);
 

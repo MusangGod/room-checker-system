@@ -3,9 +3,17 @@
 @section('main')
 
 	<div class="table-wrapper mt-[20px] input-teacher">
-		<form class="grid grid-cols-12 gap-4">						
+		<form class="grid grid-cols-12 gap-4">
 			<div class="col-span-12 md:col-span-6 flex flex-col">
 				<label for="nama" class="text-second mb-1">Nama</label>
+				<input
+					type="text"
+				 	class="input-crud"
+					value="{{ $staff->name }}"
+					disabled
+				/>
+			</div>
+				<label for="nama" class="text-second mb-1">Nomor Pegawai</label>
 				<input
 					type="text"
 				 	class="input-crud"
@@ -48,7 +56,7 @@
 					@endif
 				</label>
 			</div>
-			<div class="col-span-12 flex items-center gap-3 mt-2">				
+			<div class="col-span-12 flex items-center gap-3 mt-2">
 				<a href="{{ route('staffs.index') }}" class="button btn-second text-white" type="reset">Kembali</a>
 			</div>
 		</form>

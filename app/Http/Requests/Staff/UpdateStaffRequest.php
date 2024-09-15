@@ -21,12 +21,13 @@ class UpdateStaffRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    
+
     // Mengembalikan array aturan validasi untuk request ini
     public function rules(): array
     {
         return [
             "name" => "required",
+            "staff_number" => "required",
             "username" => "required|alpha_dash|unique:users,username," . $this->staff->user->id,
             "email" => "required|email|unique:users,email," . $this->staff->user->id,
             "password" => "nullable|min:6",

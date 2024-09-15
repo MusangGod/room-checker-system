@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $get_user_super_admin = User::where('username', $super_admin->username)->first();
 
         SuperAdmin::create([
-            "user_id" => $get_user_super_admin->id, 
+            "user_id" => $get_user_super_admin->id,
             "name" => "Super Admin"
         ]);
 
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
         $get_user_admin = User::where('username', $admin->username)->first();
 
         Admin::create([
-            "user_id" => $get_user_admin->id, 
+            "user_id" => $get_user_admin->id,
             "name" => "Admin 1"
         ]);
 
@@ -60,7 +60,8 @@ class DatabaseSeeder extends Seeder
 
         Staff::create([
             "user_id" => $get_user_staff->id,
-            "name" => "Staff 1"
+            "name" => "Staff 1",
+            "staff_number" => "123456"
         ]);
 
         $post = Post::create([
@@ -85,7 +86,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $get_tags = Tag::all()->pluck('id');
-        
+
         $post->tags()->attach($get_tags);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Staff;
+namespace App\Http\Requests\RoomCategory;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreStaffRequest extends FormRequest
+class UpdateRoomCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,11 @@ class StoreStaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required",
-            "staff_number" => "required",
-            "username" => "required|alpha_dash|unique:users,username",
-            "email" => "required|email|unique:users,email",
-            "password" => "required|min:6",
-            "image_path" => "required|image|max:5000|mimes:png,jpg,jpeg,webp,svg",
+            // Aturan untuk field "name":
+            // - wajib diisi
+            // - harus unik di tabel "tags" pada kolom "name", kecuali untuk tag dengan ID yang sedang diedit
+            //   (pengecualian ini diperlukan agar tidak terjadi kesalahan validasi saat memperbarui tag dengan nama yang sama)
+            "name" => "required|unique:room_categories,name," . $this->tag->id,
         ];
     }
 }

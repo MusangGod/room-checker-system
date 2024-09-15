@@ -27,11 +27,11 @@ class StaffRepository implements StaffRepositoryInterface
     // Fungsi untuk menyimpan data staff baru
     public function store(array $data): Staff
     {
-        User::create(Arr::except($data, 'name'));
+        User::create(Arr::except($data, ['name', 'staff_number']));
         $user = User::where('username', $data['username'])->first();
         $data["user_id"] = $user->id;
         // Membuat staff baru dengan data yang diberikan
-        return Staff::create(Arr::only($data, ['user_id', 'name']));
+        return Staff::create(Arr::only($data, ['user_id', 'name', 'staff_number']));
     }
 
     // Fungsi untuk mengupdate data staff yang ada

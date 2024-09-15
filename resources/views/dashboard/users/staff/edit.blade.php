@@ -16,6 +16,14 @@
                 @enderror
             </div>
             <div class="col-span-12 md:col-span-6 flex flex-col">
+                <label for="staff_number" class="text-second mb-1">Nomor Pegawai</label>
+                <input type="text" class="input-crud" name="staff_number" id="staff_number" value="{{ $staff->staff_number }}"
+                    placeholder="Masukkan Nomor Pegawai..." required />
+                @error('staff_number')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-span-12 md:col-span-6 flex flex-col">
                 <label for="username" class="text-second mb-1">Username</label>
                 <input type="text" class="input-crud" placeholder="Masukkan Username..." required
                     id="username" name="username" value="{{ $staff->user->username }}">
