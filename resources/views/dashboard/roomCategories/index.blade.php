@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Halaman Postingan')
+@section('title', 'Halaman Kategori Ruangan')
 
 @section('main')
     <div class="table-wrapper mt-[20px]">
@@ -34,18 +34,16 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Total Post</th>
+                    <th>Nama</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($tags as $item)
+                @forelse($roomCategories as $item)
                     <tr class="table-body">
                         <input type="hidden" class="tag_id" value="{{ $item->id }}">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->posts->count() }}</td>
                         <td>
                             <div class="flex gap-2 items-center">
 
