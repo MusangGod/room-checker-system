@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RoomCategory extends BaseModel
+class Room extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
-//    protected $table = 'room_category';
     protected $guarded = ["id"];
-
-
+    public function room_category():BelongsTo
+    {
+        return $this->belongsTo(RoomCategory::class);
+    }
 }

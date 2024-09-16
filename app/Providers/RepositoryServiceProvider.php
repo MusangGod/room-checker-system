@@ -4,11 +4,15 @@ namespace App\Providers;
 
 use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\PostRepositoryInterface;
+use App\Interfaces\RoomCategoryRepositoryInterface;
+use App\Interfaces\RoomRepositoryInterface;
 use App\Interfaces\StaffRepositoryInterface;
 use App\Interfaces\TagRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\AdminRepository;
 use App\Repositories\PostRepository;
+use App\Repositories\RoomCategoryRepository;
+use App\Repositories\RoomRepository;
 use App\Repositories\StaffRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
@@ -34,8 +38,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(StaffRepositoryInterface::class, StaffRepository::class);
         // Mendaftarkan UserRepositoryInterface untuk diimplementasikan oleh UserRepository
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        // Mendaftarkan UserRepositoryInterface untuk diimplementasikan oleh UserRepository
+        $this->app->bind(RoomCategoryRepositoryInterface::class, RoomCategoryRepository::class);
+        $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
     }
-    
+
 
     /**
      * Bootstrap services.

@@ -37,9 +37,9 @@ class StaffRepository implements StaffRepositoryInterface
     // Fungsi untuk mengupdate data staff yang ada
     public function update(array $newData, Staff $staff): Staff
     {
-        User::whereId($staff->user_id)->update(Arr::except($newData, 'name'));
+        User::whereId($staff->user_id)->update(Arr::except($newData, ['name', 'staff_number']));
         // Mengupdate staff berdasarkan ID dengan data baru yang diberikan
-        $is_updated = Staff::whereId($staff->id)->update(Arr::only($newData, ['name', 'user_id']));
+        $is_updated = Staff::whereId($staff->id)->update(Arr::only($newData, ['name', 'user_id', 'staff_number']));
         // Mengambil staff yang telah diperbarui
         $get_staff = $this->getById($staff->id);
         // Mengembalikan staff yang diperbarui jika berhasil, atau null jika gagal

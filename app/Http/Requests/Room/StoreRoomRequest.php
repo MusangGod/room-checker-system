@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\RoomCategory;
+namespace App\Http\Requests\Room;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateRoomCategoryRequest extends FormRequest
+class StoreRoomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,16 @@ class UpdateRoomCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // Aturan untuk field "name":
-            // - wajib diisi
-            // - harus unik di tabel "tags" pada kolom "name", kecuali untuk tag dengan ID yang sedang diedit
-            //   (pengecualian ini diperlukan agar tidak terjadi kesalahan validasi saat memperbarui tag dengan nama yang sama)
-            "name" => "required|unique:room_categories,name," . $this->roomCategory->id,
+            "name" => "required",
+            "status" => "required",
+            "room_category_id" => "required",
+            "image" => "required|file|image|max:5048|mimes:png,jpg,jpeg,webp,svg",
         ];
+    }
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            back()->with('error', $validator->errors())
+        );
     }
 }

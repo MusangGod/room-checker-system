@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomCategoryController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::middleware(["auth"])->prefix('/dashboard')->group(function() {
     // Route untuk modul room category
     // Menggunakan resource untuk CRUD
     Route::resource("roomCategories", RoomCategoryController::class);
+    Route::resource("rooms", RoomController::class);
     // Route untuk modul admin
     // Menggunakan resource untuk CRUD
     Route::resource("admins", AdminController::class);

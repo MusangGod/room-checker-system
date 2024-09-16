@@ -19,14 +19,14 @@ class RoomCategoryRepository implements RoomCategoryRepositoryInterface
     }
 
     // Fungsi untuk mendapatkan data Tag berdasarkan ID
-    public function getById($id): Tag
+    public function getById($id): RoomCategory
     {
         // Mencari tag berdasarkan ID, atau gagal jika tidak ditemukan
         return RoomCategory::findOrFail($id);
     }
 
     // Fungsi untuk menyimpan data Tag baru
-    public function store(array $data): Tag
+    public function store(array $data): RoomCategory
     {
         // Membuat tag baru dengan data yang diberikan
         return RoomCategory::create($data);
@@ -44,16 +44,9 @@ class RoomCategoryRepository implements RoomCategoryRepositoryInterface
     }
 
     // Fungsi untuk menghapus data Tag
-    public function delete($id): ?RoomCategory
+    public function delete($id): RoomCategory
     {
-        // Mengambil tag berdasarkan ID sebelum dihapus
         $get_roomCategory = $this->getById($id);
-//        $get_post_tags = PostTag::where('tag_id', $get_tag->id)->get();
-//        // dd($get_post_tags);
-//        foreach($get_post_tags as $post_tag) {
-//            $post_tag->delete();
-//        }
-
         // Menghapus tag berdasarkan ID
         $is_deleted = RoomCategory::destroy($id);
         // Mengembalikan tag yang dihapus jika berhasil, atau null jika gagal
