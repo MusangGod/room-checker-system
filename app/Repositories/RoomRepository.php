@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\RoomRepositoryInterface;
 use App\Models\Room;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class RoomRepository implements RoomRepositoryInterface
@@ -16,10 +17,10 @@ class RoomRepository implements RoomRepositoryInterface
     }
 
     // Fungsi untuk mendapatkan data Tag berdasarkan ID
-    public function getById($id): Room
+    public function getById($id): Collection|\Illuminate\Database\Eloquent\Model
     {
         // Mencari tag berdasarkan ID, atau gagal jika tidak ditemukan
-        return Room::findOrFail($id);
+        return Room::with('room_category')->findOrFail($id);
     }
 
     // Fungsi untuk menyimpan data Tag baru

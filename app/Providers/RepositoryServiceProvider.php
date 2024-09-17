@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\PostRepositoryInterface;
 use App\Interfaces\RoomCategoryRepositoryInterface;
+use App\Interfaces\RoomCheckerRepositoryInterface;
 use App\Interfaces\RoomRepositoryInterface;
 use App\Interfaces\StaffRepositoryInterface;
 use App\Interfaces\TagRepositoryInterface;
@@ -12,6 +13,7 @@ use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\AdminRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\RoomCategoryRepository;
+use App\Repositories\RoomCheckerRepository;
 use App\Repositories\RoomRepository;
 use App\Repositories\StaffRepository;
 use App\Repositories\TagRepository;
@@ -41,6 +43,7 @@ class RepositoryServiceProvider extends ServiceProvider
         // Mendaftarkan UserRepositoryInterface untuk diimplementasikan oleh UserRepository
         $this->app->bind(RoomCategoryRepositoryInterface::class, RoomCategoryRepository::class);
         $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
+        $this->app->bind(RoomCheckerRepositoryInterface::class, RoomCheckerRepository::class);
     }
 
 
