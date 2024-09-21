@@ -50,7 +50,7 @@
 
     {{-- Rich Text Editor --}}
     <link rel="stylesheet" href="{{ asset('assets/css/richtexteditor/rte_theme_default.css') }}">
-    
+
     <!-- Helpers -->
     <script src="/assets/vendor/js/helpers.js"></script>
     <script src="/assets/js/config.js"></script>
@@ -101,12 +101,14 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <!-- Menu -->
-            <x-sidebar></x-sidebar>
-            <!-- / Menu -->
+            @if(auth()->user()->role == 'admin')
+                <!-- Menu -->
+                <x-sidebar></x-sidebar>
+                <!-- / Menu -->
+            @endif
 
             <!-- Layout container -->
-            <div class="layout-page">
+            <div class="{{auth()->user()->role == 'admin' ? 'layout-page' : ''}} w-full">
                 <!-- Navbar -->
                 <x-navbar></x-navbar>
                 <!-- / Navbar -->

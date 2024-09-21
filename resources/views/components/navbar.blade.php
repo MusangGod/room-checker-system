@@ -2,17 +2,27 @@
 id="layout-navbar">
 
 
-    <div class="navbar-nav-right items-center flex container" id="navbar-collapse">
-				<h1 class="text-2xl opacity-100 text-second m-0">@yield('title')</h1>
-
-        <ul class="navbar-nav flex-row align-items-center ms-auto gap-3">
+    <div class="navbar-nav-right items-center flex container justify-between" id="navbar-collapse">
+        <h1 class="text-2xl opacity-100 text-second m-0">@yield('title')</h1>
+        <ul class="flex gap-3 mb-0">
+            <li>
+                <a class="side-link p-0 {{}}" href="{{route('dashboard')}}">Beranda</a>
+            </li>
+            <li>
+                <a class="side-link p-0" href="#">Ruangan</a>
+            </li>
+            <li>
+                <a class="side-link p-0" href="#">Riwayat</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-row align-items-center gap-3">
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle d-flex items-center gap-3 hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
                     @if (auth()->user()->image_path)
                 	    <img src="{{ asset(auth()->user()->image_path) }}" alt class="w-px-40 h-auto rounded-[50%] aspect-square object-cover object-center" />
-                    @else   
+                    @else
                 	    <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                     @endif
                 </div>
