@@ -30,6 +30,7 @@ class StoreRoomCheckerRequest extends FormRequest
             "time" => "required|date_format:H:i",
             "status" => "required",
             "room_id" => "required",
+            "description" => "required",
             "image" => "required|file|image|max:5048|mimes:png,jpg,jpeg,webp,svg",
         ];
     }

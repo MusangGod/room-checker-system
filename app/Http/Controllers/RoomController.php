@@ -99,8 +99,6 @@ class RoomController extends Controller
             // Mengirim respon sukses dengan data tag
             return view('dashboard.rooms.show', compact('room', 'roomChecker'));
         } catch (\Exception $ex) {
-            // Mengirim respon error jika terjadi kesalahan
-            DB::rollBack();
             logger($ex->getMessage());
             return abort(404);
         }

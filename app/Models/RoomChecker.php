@@ -16,4 +16,8 @@ class RoomChecker extends BaseModel
     {
         return $this->belongsTo(Room::class, 'room_id');
     }
+    public function user_data():BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

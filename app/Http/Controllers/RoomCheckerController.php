@@ -35,22 +35,37 @@ class RoomCheckerController extends Controller
     /**
      * Menampilkan daftar resource (tag).
      */
-//    public function index()
-//    {
-//        // Mengambil semua data tag melalui repository
-//        $rooms = $this->roomRepositoryInterface->getAll();
-//
-//        // Mengirim respon sukses dengan data tag
-//        return view('dashboard.rooms.index', compact('rooms'));
-//    }
+    public function index()
+    {
+        // Mengambil semua data tag melalui repository
+        $rooms = $this->roomRepositoryInterface->getAll();
+        $roomCheckhers = $this->roomCheckerRepositoryInterface->getAll();
+        // Mengirim respon sukses dengan data tag
+        return view('dashboard.roomCheckers.index', compact('rooms', 'roomCheckhers'));
+    }
+
+    public function detail($id)
+    {
+        try {
+            // Mengambil data tag berdasarkan ID melalui repository
+            $room = $this->roomRepositoryInterface->getById($id);
+            $roomChecker = $this->roomCheckerRepositoryInterface->getByRoomId($id);
+
+            // Mengirim respon sukses dengan data tag
+            return view('dashboard.roomCheckers.detail', compact('room', 'roomChecker'));
+        } catch (\Exception $ex) {
+            logger($ex->getMessage());
+            return abort(404);
+        }
+    }
 
     /**
      * Menampilkan view Room Category tag
      */
-    public function create()
+    public function create($room_id)
     {
-        $room = $this->roomRepositoryInterface->getAll();
-        return view('dashboard.rooms.create', compact('room'));
+        $room = $this->roomRepositoryInterface->getById($room_id);
+        return view('dashboard.roomCheckers.create',compact('room'));
     }
 
     /**
@@ -77,7 +92,7 @@ class RoomCheckerController extends Controller
             $newRoomChecker['user_id'] = Auth::user()->id;
             $roomChecker = $this->roomCheckerRepositoryInterface->store($newRoomChecker);
             DB::commit();
-            return redirect()->route('rooms.show', ['id' => $newRoomChecker['room_id']])->with('success', 'Pengecekan ruangan berhasil ditambahkan');
+            return redirect()->route('rooms.show', $request['room_id'])->with('success', 'Pengecekan ruangan berhasil ditambahkan');
         } catch (\Exception $ex) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollBack();
@@ -94,7 +109,6 @@ class RoomCheckerController extends Controller
         try {
             // Mengambil data tag berdasarkan ID melalui repository
             $roomChecker = $this->roomCheckerRepositoryInterface->getById($id);
-
             // Mengirim respon sukses dengan data tag
             return view('dashboard.roomChecker.show', compact('roomChecker'));
         } catch (\Exception $ex) {

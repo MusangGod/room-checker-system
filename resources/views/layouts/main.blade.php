@@ -101,14 +101,14 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            @if(auth()->user()->role == 'admin')
+            @if(App\Enums\Role::ADMIN)
                 <!-- Menu -->
                 <x-sidebar></x-sidebar>
                 <!-- / Menu -->
             @endif
 
             <!-- Layout container -->
-            <div class="{{auth()->user()->role == 'admin' ? 'layout-page' : ''}} w-full">
+            <div class="{{App\Enums\Role::ADMIN ? 'layout-page' : ''}} w-full">
                 <!-- Navbar -->
                 <x-navbar></x-navbar>
                 <!-- / Navbar -->

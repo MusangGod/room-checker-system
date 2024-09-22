@@ -44,7 +44,7 @@ class RoomCategoryRepository implements RoomCategoryRepositoryInterface
     }
 
     // Fungsi untuk menghapus data Tag
-    public function delete($id): RoomCategory
+    public function delete($id): ?RoomCategory
     {
         $get_roomCategory = $this->getById($id);
         // Menghapus tag berdasarkan ID

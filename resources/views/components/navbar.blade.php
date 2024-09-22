@@ -4,17 +4,19 @@ id="layout-navbar">
 
     <div class="navbar-nav-right items-center flex container justify-between" id="navbar-collapse">
         <h1 class="text-2xl opacity-100 text-second m-0">@yield('title')</h1>
-        <ul class="flex gap-3 mb-0">
-            <li>
-                <a class="side-link p-0 {{}}" href="{{route('dashboard')}}">Beranda</a>
-            </li>
-            <li>
-                <a class="side-link p-0" href="#">Ruangan</a>
-            </li>
-            <li>
-                <a class="side-link p-0" href="#">Riwayat</a>
-            </li>
-        </ul>
+        @if(auth()->user()->role == 3)
+            <ul class="flex gap-3 mb-0">
+                <li>
+                    <a class="side-link p-0 {{Request::is('dashboard') ? 'active' : ''}}" href="{{route('dashboard')}}">Beranda</a>
+                </li>
+                <li>
+                    <a class="side-link p-0 {{Request::is('dashboard/rooms*') ? 'active' : ''}}" href="{{route('rooms.index')}}">Ruangan</a>
+                </li>
+                <li>
+                    <a class="side-link p-0" href="#">Riwayat</a>
+                </li>
+            </ul>
+        @endif
         <ul class="navbar-nav flex-row align-items-center gap-3">
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">

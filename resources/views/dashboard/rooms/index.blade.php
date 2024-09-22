@@ -1,6 +1,5 @@
 @extends('layouts.main')
 @section('title', 'Halaman Ruangan')
-
 @section('main')
     <div class="table-wrapper mt-[20px]">
         <div class="flex justify-between items-center gap-3">
@@ -11,7 +10,7 @@
                 </svg>
                 <input type="search" class="searchInputTable w-full focus:ring-0 focus:outline-none" placeholder="Cari data ruangan ...">
             </div>
-            @if(\Illuminate\Support\Facades\Auth::user()->id == 'admin')
+            @if(App\Enums\Role::ADMIN)
                 <div class="flex">
                     <a href="{{ route('rooms.create') }}"
                        class="flex button btn-main duration-200 capitalize w-max items-center gap-1" type="button">
@@ -66,7 +65,7 @@
                                         </defs>
                                     </svg>
                                 </a>
-                                @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                                @if(App\Enums\Role::ADMIN)
                                     <a href="{{ route('rooms.edit', $item->id) }}"
                                        class="icon-table icon-edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

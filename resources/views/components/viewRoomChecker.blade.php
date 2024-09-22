@@ -1,3 +1,5 @@
+@props(['room_id', 'rooms'])
+{{--@dd($rooms)--}}
 <h2 class="text-second mt-20">Data Pengecekan Ruangan</h2>
 <div class="flex justify-between items-center gap-3 mt-5">
     <div class="input-wrapper flex gap-2 items-center">
@@ -8,7 +10,7 @@
         <input type="search" class="searchInputTable w-full focus:ring-0 focus:outline-none" placeholder="Cari data postingan ...">
     </div>
     <div class="flex">
-        <a href="{{ route('posts.create') }}"
+        <a href="{{ route('roomCheckers.create',['room_id'=>$room_id]) }}"
            class="flex button btn-main duration-200 capitalize w-max items-center gap-1" type="button">
             Tambah
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -33,20 +35,21 @@
             <th>Tanggal</th>
             <th>Jam</th>
             <th class="lg:table-cell">Status</th>
+            <th class="lg:table-cell">Pengguna</th>
             <th>Aksi</th>
         </tr>
         </thead>
         <tbody>
-        @forelse($roomChecker as $item)
+        @forelse($rooms as $item)
         <tr class="table-body">
             <input type="hidden" class="post_id" value="{{ $item->id }}">
             <td>{{ $loop->index+1 }}</td>
             <td>{{ $item->date }}</td>
             <td>{{ $item->time }}</td>
             <td>{{ $item->status }}</td>
+            <td>{{ $item->user_data->email }}</td>
             <td>
                 <div class="flex gap-2 items-center">
-
                     <a href="{{ route('posts.show', $item->id) }}"  class="icon-table icon-detail">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <g clip-path="url(#clip0_7909_2017)">

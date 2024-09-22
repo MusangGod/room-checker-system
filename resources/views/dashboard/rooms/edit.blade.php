@@ -31,7 +31,7 @@
             <div class="col-span-12 flex flex-col">
                 <p class="text-second mb-1">Status Ruangan</p>
                 <label class="switch">
-                    <input type="checkbox" name="status" @checked($room->status ? 'on' : '')>
+                    <input type="checkbox" name="status" @checked($room->status=='active' ? 'on' : '')>
                     <span class="slider round"></span>
                 </label>
 

@@ -22,7 +22,7 @@
             <div class="col-span-12 flex flex-col">
                 <p class="text-second mb-1">Status Ruangan</p>
                 <label class="switch">
-                    <input disabled type="checkbox" name="status" @checked($room->status ? 'on' : '')>
+                    <input disabled type="checkbox" @checked($room->status=='active' ? 'on' : '')>
                     <span class="slider round"></span>
                 </label>
 
@@ -49,9 +49,12 @@
                 @enderror
             </div>
         </form>
-        @include('components.room-checker.viewRoomChecker')
+        <x-viewRoomChecker
+            room_id="{{$room->id}}"
+            :rooms="$roomChecker"
+        />
         <div class="col-span-12 flex items-center gap-3 mt-2">
-            <a href="{{ route('tags.index') }}" class="button btn-second text-white" type="reset">Kembali</a>
+            <a href="{{ route('rooms.index') }}" class="button btn-second text-white" type="reset">Kembali</a>
         </div>
     </div>
 @endsection

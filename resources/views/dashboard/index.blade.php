@@ -5,13 +5,13 @@
 @endsection
 
 @section('main')
-    @if(Auth::user()->role == 'admin')
+    @if(App\Enums\Role::ADMIN)
         <div class="py-14 pt-2">
             <div class="px-9 py-8 dashbaord-banner">
                 <p class="text-sm text-white">Hi, {{ auth()->user()->username  }}
                     sebagai {{ auth()->user()->role->label() }}</p>
                 <h4 class="text-3xl text-white font-semibold max-w-[450px]">
-                    Segera buat artikel untuk pengunjung anda
+                    Selamat datang di sistem pengecekan ruangan
                 </h4>
             </div>
 

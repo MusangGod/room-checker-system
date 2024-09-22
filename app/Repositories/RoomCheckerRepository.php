@@ -15,14 +15,14 @@ class RoomCheckerRepository implements RoomCheckerRepositoryInterface
     public function getAll(): Collection
     {
         // Mengambil semua tag dan mengurutkannya dari yang terbaru
-        return RoomChecker::with('room_date')->latest()->get();
+        return RoomChecker::with('user_data', 'room_data')->latest()->get();
     }
 
     // Fungsi untuk mendapatkan data Tag berdasarkan ID
     public function getByRoomId($room_id): array|Collection
     {
         // Mencari tag berdasarkan ID, atau gagal jika tidak ditemukan
-        return RoomChecker::with('room_data')->where('room_id', $room_id)->latest()->get();
+        return RoomChecker::with('room_data', 'user_data')->where('room_id', $room_id)->latest()->get();
     }
 
     // Fungsi untuk mendapatkan data Tag berdasarkan ID
