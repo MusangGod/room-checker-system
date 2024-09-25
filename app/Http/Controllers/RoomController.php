@@ -12,13 +12,11 @@ use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Interfaces\RoomCategoryRepositoryInterface;
 use App\Interfaces\RoomCheckerRepositoryInterface;
 use App\Interfaces\RoomRepositoryInterface;
-use App\Interfaces\TagRepositoryInterface;
 use App\Models\Room;
-use App\Models\RoomCategory;
-use App\Models\Tag;
 use App\Utils\UploadFile;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RoomController extends Controller
 {
@@ -76,6 +74,12 @@ class RoomController extends Controller
             $newRoom["slug"] = str()->slug($newRoom["name"]);
             $newRoom['status'] = $request->status == "on" ? 'active' : 'inactive';
             $room = $this->roomRepositoryInterface->store($newRoom);
+            $qrCodeUrl = route('roomCheckers.create', ['room_id' => $room->id]);
+            $qrCode = QrCode::format('png')
+            ->size(200)
+            ->generate($qrCodeUrl);
+            $qrCodeFilename = 'qrcodes/room-' . $room->id . '.png';
+            Storage::disk('public')->put($qrCodeFilename, $qrCode);
             DB::commit();
             return redirect()->route("rooms.index")->with('success', 'Ruangan berhasil ditambahkan');
         } catch (\Exception $ex) {

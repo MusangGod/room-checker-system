@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components{
 	.normal-section {
 		@apply grid grid-cols-12 gap-6 items-center
@@ -121,7 +120,7 @@
 		@apply w-9 h-9 rounded flex justify-center items-center border border-[#2824211F] bg-[#F5F6FB]
 	}
 	.card-dashboard{
-		@apply  bg-white border border-[#1414141F] rounded px-6 py-4
+		@apply  bg-white border border-[#1414141F] rounded px-6 py-4 flex justify-between items-start
 	}
 	.btn-dropdown{
 		@apply w-fit flex items-center rounded-full py-2 px-3 border border-[#2824211F] rounded text-second
@@ -307,7 +306,7 @@
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
         }
-    
+
 	@keyframes rotation {
         0% {
             transform: rotate(0deg);
@@ -315,5 +314,6 @@
         100% {
             transform: rotate(360deg);
         }
-    } 
+    }
 }
+

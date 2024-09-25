@@ -16,7 +16,7 @@
             </div>
 
             <div class="grid lg:grid-cols-2 mt-[20px] md:grid-cols-2 grid-cols-1 gap-8">
-                <div class="card-dashboard flex justify-between items-start">
+                <div class="card-dashboard">
                     <div class="">
                         <p class="mb-0 capitalize text-sm font-medium desc">Total Ruangan</p>
                         <h1 class="m-0 text-3xl font-semibold text-main">{{ $rooms_count }}</h1>
@@ -36,7 +36,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="card-dashboard flex justify-between items-start">
+                <div class="card-dashboard">
                     <div class="">
                         <p class="mb-0 capitalize text-sm font-medium desc">Total Staff</p>
                         <h1 class="m-0 text-3xl font-semibold text-main">{{ $staffs_count }}</h1>

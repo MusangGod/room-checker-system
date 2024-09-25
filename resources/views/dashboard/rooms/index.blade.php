@@ -36,17 +36,21 @@
                         <th>Nama</th>
                         <th>Kategori</th>
                         <th>Status</th>
+                        <th>QR Code Ruangan</th>
                         <th>Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
                     @forelse($rooms as $item)
                         <tr class="table-body">
-                            <input type="hidden" class="item_id" value="{{ $item->id }}">
+                            <input class="item_id" type="hidden" value="{{$item->id}}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->room_category->name }}</td>
                             <td>{{ $item->status }}</td>
+                            <td>
+                                <img src="{{ asset('storage/qrcodes/room-' . $item->id . '.png') }}" alt="QR Code for Room">
+                            </td>
                             <td>
                                 <div class="flex gap-2 items-center">
                                     <a href="{{ route('rooms.show', $item->id) }}"  class="icon-table icon-detail">
