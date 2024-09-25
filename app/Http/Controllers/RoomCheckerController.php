@@ -35,13 +35,46 @@ class RoomCheckerController extends Controller
     /**
      * Menampilkan daftar resource (tag).
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request['date'] == null) {
+            $request['date'] = date('Y-m-d');
+        }
         // Mengambil semua data tag melalui repository
         $rooms = $this->roomRepositoryInterface->getAll();
-        $roomCheckhers = $this->roomCheckerRepositoryInterface->getAll();
+//        $roomCheckhers = $this->roomCheckerRepositoryInterface->getAll();
+        $roomCheck = RoomChecker::with('room_data')->where('date', $request['date'])->get();
+        $staffRooms = [];
+        $rooms = $this->roomRepositoryInterface->getAll();
+        $roomCheck = RoomChecker::with('room_data')->where('date', $request['date'])->get();
+        $staffRooms = [];
+        foreach ($rooms as $room) {
+            $foundCheck = false;
+            // Cari apakah ruangan ini sudah dilakukan pengecekan
+            foreach ($roomCheck as $check) {
+                if ($check->room_data->id == $room->id) {
+                    $staffRooms[] = (object)[
+                        'name' => $room->name,
+                        'category' => $room->room_category->name,
+                        'status' => $check->status,
+                    ];
+                    $foundCheck = true;
+                    break;  // Keluar dari loop pengecekan karena sudah ketemu
+                }
+            }
+            // Jika pengecekan tidak ditemukan, set status menjadi 'belum'
+            if (!$foundCheck) {
+                $staffRooms[] = (object)[
+                    'name' => $room->name,
+                    'category' => $room->room_category->name,
+                    'status' => 'belum',
+                ];
+            }
+        }
+
+
         // Mengirim respon sukses dengan data tag
-        return view('dashboard.roomCheckers.index', compact('rooms', 'roomCheckhers'));
+        return view('dashboard.roomCheckers.index', compact('rooms', 'roomCheck', 'staffRooms'));
     }
 
     public function detail($id)
@@ -73,8 +106,9 @@ class RoomCheckerController extends Controller
      */
     public function edit(RoomChecker $roomChecker)
     {
-        $room = $this->roomRepositoryInterface->getAll();
-        return view('dashboard.rooms.edit', compact('roomChecker', 'room'));
+//        dd($roomChecker);
+        $room = $this->roomRepositoryInterface->getById($roomChecker->room_id);
+        return view('dashboard.roomCheckers.edit', compact('roomChecker', 'room'));
     }
 
     /**
@@ -87,12 +121,12 @@ class RoomCheckerController extends Controller
         DB::beginTransaction();
         try {
             $newRoomChecker = $request->validated();
-            $filename = $this->uploadFile->uploadSingleFile($newRoomChecker["image"], "rooms");
+            $filename = $this->uploadFile->uploadSingleFile($newRoomChecker["image"], "roomCheckers");
             $newRoomChecker["image"] = $filename;
             $newRoomChecker['user_id'] = Auth::user()->id;
             $roomChecker = $this->roomCheckerRepositoryInterface->store($newRoomChecker);
             DB::commit();
-            return redirect()->route('rooms.show', $request['room_id'])->with('success', 'Pengecekan ruangan berhasil ditambahkan');
+            return redirect()->route('roomCheckers.detail', $request['room_id'])->with('success', 'Pengecekan ruangan berhasil ditambahkan');
         } catch (\Exception $ex) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollBack();
@@ -109,8 +143,9 @@ class RoomCheckerController extends Controller
         try {
             // Mengambil data tag berdasarkan ID melalui repository
             $roomChecker = $this->roomCheckerRepositoryInterface->getById($id);
+            $room = $this->roomRepositoryInterface->getById($roomChecker->room_id);
             // Mengirim respon sukses dengan data tag
-            return view('dashboard.roomChecker.show', compact('roomChecker'));
+            return view('dashboard.roomCheckers.show', compact('roomChecker', 'room'));
         } catch (\Exception $ex) {
             // Mengirim respon error jika terjadi kesalahan
             DB::rollBack();
@@ -131,17 +166,17 @@ class RoomCheckerController extends Controller
             $updateRoomChecker = $request->validated();
             if($request->has('image')) {
                 $this->uploadFile->deleteExistFile($roomChecker->image);
-                $filename = $this->uploadFile->uploadSingleFile($updateRoomChecker["image"], "rooms");
+                $filename = $this->uploadFile->uploadSingleFile($updateRoomChecker["image"], "roomCheckers");
                 $updateRoomChecker["image"] = $filename;
             }
 
             // Memperbarui tag melalui repository
-            $roomChecker = $this->roomRepositoryInterface->update($updateRoomChecker, $updateRoomChecker);
+            $roomChecker = $this->roomCheckerRepositoryInterface->update($updateRoomChecker, $roomChecker);
 
             // Komit transaksi jika berhasil
             DB::commit();
             // mengembalikan response "Tag berhasil diupdate"
-            return redirect()->route('rooms.show', ['id' => $updateRoomChecker['room_id']])->with('success', 'Pengecekan ruangan berhasil diupdate');
+            return redirect()->route('roomCheckers.detail', ['room_id' => $updateRoomChecker['room_id']])->with('success', 'Pengecekan ruangan berhasil diupdate');
         } catch (\Exception $ex) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollBack();

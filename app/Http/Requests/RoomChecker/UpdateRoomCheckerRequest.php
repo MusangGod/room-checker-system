@@ -26,10 +26,11 @@ class UpdateRoomCheckerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "date" => "required|date",
-            "time" => "required|date_format:H:i",
+            "date" => "required",
+            "time" => "required",
             "status" => "nullable",
-            "room_id" => "required",
+            "room_id" => "nullable",
+            "description" => "required",
             "image" => "nullable|file|image|max:5048|mimes:png,jpg,jpeg,webp,svg",
         ];
     }

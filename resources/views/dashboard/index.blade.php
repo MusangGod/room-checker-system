@@ -5,7 +5,7 @@
 @endsection
 
 @section('main')
-    @if(App\Enums\Role::ADMIN)
+    @if(auth()->user()->role == App\Enums\Role::ADMIN)
         <div class="py-14 pt-2">
             <div class="px-9 py-8 dashbaord-banner">
                 <p class="text-sm text-white">Hi, {{ auth()->user()->username  }}
@@ -18,8 +18,8 @@
             <div class="grid lg:grid-cols-2 mt-[20px] md:grid-cols-2 grid-cols-1 gap-8">
                 <div class="card-dashboard flex justify-between items-start">
                     <div class="">
-                        <p class="mb-0 capitalize text-sm font-medium desc">Total Post</p>
-                        <h1 class="m-0 text-3xl font-semibold text-main">{{ $posts_count }}</h1>
+                        <p class="mb-0 capitalize text-sm font-medium desc">Total Ruangan</p>
+                        <h1 class="m-0 text-3xl font-semibold text-main">{{ $rooms_count }}</h1>
                     </div>
                     <div class="">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,8 +38,8 @@
                 </div>
                 <div class="card-dashboard flex justify-between items-start">
                     <div class="">
-                        <p class="mb-0 capitalize text-sm font-medium desc">Total Category</p>
-                        <h1 class="m-0 text-3xl font-semibold text-main">{{ $tags_count }}</h1>
+                        <p class="mb-0 capitalize text-sm font-medium desc">Total Staff</p>
+                        <h1 class="m-0 text-3xl font-semibold text-main">{{ $staffs_count }}</h1>
                     </div>
                     <div class="">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,111 +54,6 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-dashboard-wrapper mt-[20px]">
-                <div class="flex sm:flex-row flex-col gap-3 justify-between">
-                    <h6 class="text-2xl font-semibold text-second mb-0">Grafik Total Post</h6>
-                    <div class="category1 item">
-                        <button id="dropdownDefaultButton" onclick="showItems('category1')"
-                                data-dropdown-toggle="dropdown"
-                                class="flex rounded-full w-max btn-dropdown category-name active" type="button">
-                            Tahun ini
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="m1 1 4 4 4-4"/>
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdown"
-                             class="z-30 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm ps-0" aria-labelledby="dropdownDefaultButton">
-                                <li>
-                                    <button onclick="showItems('category2')" class="link-dropdown category-name">Bulan
-                                        ini
-                                    </button>
-                                </li>
-                                <li>
-                                    <button onclick="showItems('category3')" class="link-dropdown category-name">Minggu
-                                        ini
-                                    </button>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="category2 item" style="display: none">
-                        <button id="dropdownDefaultButton2" onclick="showItems('category2')"
-                                data-dropdown-toggle="dropdown2"
-                                class="flex rounded-full btn-dropdown category-name active" type="button">
-                            Bulan ini
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="m1 1 4 4 4-4"/>
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdown2"
-                             class="z-30 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm ps-0" aria-labelledby="dropdownDefaultButton2">
-                                <li>
-                                    <button onclick="showItems('category3')" class="link-dropdown category-name">Minggu
-                                        ini
-                                    </button>
-                                </li>
-                                <li>
-                                    <button onclick="showItems('category1')" class="link-dropdown category-name">Tahun
-                                        ini
-                                    </button>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="category3 item" style="display: none">
-                        <button id="dropdownDefaultButton3" onclick="showItems('category3')"
-                                data-dropdown-toggle="dropdown3"
-                                class="flex btn-dropdown rounded-full category-name active" type="button">
-                            Minggu ini
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="m1 1 4 4 4-4"/>
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdown3"
-                             class="z-30 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm ps-0" aria-labelledby="dropdownDefaultButton">
-                                <li>
-                                    <button onclick="showItems('category1')" class="link-dropdown category-name">Tahun
-                                        ini
-                                    </button>
-                                </li>
-                                <li>
-                                    <button onclick="showItems('category2')" class="link-dropdown category-name">Bulan
-                                        ini
-                                    </button>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="category-content mt-[32px]">
-                    <div class="category1 item">
-                        <div class="" id="chart1"></div>
-                    </div>
-                    <div class="category2 item" style="display: none">
-                        <div class="" id="chart2"></div>
-                    </div>
-                    <div class="category3 item" style="display: none">
-                        <div class="" id="chart3"></div>
                     </div>
                 </div>
             </div>
@@ -177,139 +72,3 @@
 
 @endsection
 
-@push('js')
-    <script>
-        let post_yearly = <?= json_encode($post_yearly); ?>;
-        let post_monthly = <?= json_encode($post_monthly); ?>;
-        let post_weekly = <?= json_encode($post_weekly); ?>;
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var showCategory = 'category1';
-            var showAllCategory = document.querySelector(`.category-name[data-category="${showCategory}"]`);
-            showAllCategory.classList.add('active');
-            showCategory.style.display = 'flex';
-            showItems(showCategory); // Panggil fungsi showItems() dengan kategori 'category1' sebagai default
-        });
-
-        function showItems(category) {
-            // Menghapus kelas "active" dari semua kategori
-            var categories = document.getElementsByClassName('.category-name');
-            for (var i = 0; i < categories.length; i++) {
-                categories[i].classList.remove('active');
-            }
-
-            // Menambahkan kelas "active" ke kategori yang dipilih
-            var selectedCategory = event.target;
-            if (!selectedCategory.classList.contains('active')) {
-                selectedCategory.classList.add('active');
-            }
-
-            // Menampilkan item-item yang memiliki kategori yang sama dengan kategori yang dipilih
-            var items = document.getElementsByClassName('item');
-            for (var j = 0; j < items.length; j++) {
-                items[j].style.display = 'none';
-                if (items[j].classList.contains(category)) {
-                    items[j].style.display = 'block';
-                }
-            }
-        }
-
-        let options1 = {
-            chart: {
-                type: 'bar',
-                height: 215
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: 26,
-                    endingShape: 'rounded',
-                    startingShape: 'rounded',
-                    rounded: '50%',
-                    borderRadius: 5,
-                    // borderRadiusApplication: 'end',
-                },
-            },
-            colors: ['#6562E8', '#7D7AFF'],
-
-            series: [{
-                name: 'Postingan',
-                data: post_yearly
-            }],
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des']
-            },
-            yaxis: {
-                categories: [10, 20, 30, 40, 50]
-            }
-        }
-
-        let options2 = {
-            chart: {
-                type: 'bar',
-                height: 215
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: 26,
-                    endingShape: 'rounded',
-                    startingShape: 'rounded',
-                    rounded: '50%',
-                    borderRadius: 5,
-                    // borderRadiusApplication: 'end',
-                },
-            },
-            colors: ['#6562E8', '#7D7AFF'],
-
-            series: [{
-                name: 'Postingan',
-                data: post_monthly
-            }],
-            xaxis: {
-                categories: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4']
-            },
-            yaxis: {
-                categories: [10, 20, 30, 40, 50]
-            }
-        }
-
-        let options3 = {
-            chart: {
-                type: 'bar',
-                height: 215
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: 26,
-                    endingShape: 'rounded',
-                    startingShape: 'rounded',
-                    rounded: '50%',
-                    borderRadius: 5,
-                    // borderRadiusApplication: 'end',
-                },
-            },
-            colors: ['#6562E8', '#7D7AFF'],
-
-            series: [{
-                name: 'Postingan',
-                data: post_weekly
-            }],
-            xaxis: {
-                categories: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
-            },
-            yaxis: {
-                categories: [10, 20, 30, 40, 50]
-            }
-        }
-
-        let chart = new ApexCharts(document.querySelector("#chart1"), options1);
-        let chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
-        let chart3 = new ApexCharts(document.querySelector("#chart3"), options3);
-
-        chart.render();
-        chart2.render();
-        chart3.render();
-    </script>
-@endpush

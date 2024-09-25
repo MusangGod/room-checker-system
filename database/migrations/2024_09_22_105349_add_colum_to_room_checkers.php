@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string("name");
-            $table->string("slug");
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('room_checkers', function (Blueprint $table) {
+            $table->string('description');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::table('room_checkers', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -27,7 +27,7 @@ class StoreRoomRequest extends FormRequest
     {
         return [
             "name" => "required",
-            "status" => "required",
+            "status" => "nullable",
             "room_category_id" => "required",
             "image" => "required|file|image|max:5048|mimes:png,jpg,jpeg,webp,svg",
         ];

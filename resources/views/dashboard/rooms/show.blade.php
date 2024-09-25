@@ -49,11 +49,7 @@
                 @enderror
             </div>
         </form>
-        <x-viewRoomChecker
-            room_id="{{$room->id}}"
-            :rooms="$roomChecker"
-        />
-        <div class="col-span-12 flex items-center gap-3 mt-2">
+        <div class="col-span-12 flex items-center gap-3 mt-5">
             <a href="{{ route('rooms.index') }}" class="button btn-second text-white" type="reset">Kembali</a>
         </div>
     </div>

@@ -4,7 +4,7 @@ id="layout-navbar">
 
     <div class="navbar-nav-right items-center flex container justify-between" id="navbar-collapse">
         <h1 class="text-2xl opacity-100 text-second m-0">@yield('title')</h1>
-        @if(auth()->user()->role == 3)
+        @if(auth()->user()->role == App\Enums\Role::STAFF)
             <ul class="flex gap-3 mb-0">
                 <li>
                     <a class="side-link p-0 {{Request::is('dashboard') ? 'active' : ''}}" href="{{route('dashboard')}}">Beranda</a>
@@ -13,7 +13,10 @@ id="layout-navbar">
                     <a class="side-link p-0 {{Request::is('dashboard/rooms*') ? 'active' : ''}}" href="{{route('rooms.index')}}">Ruangan</a>
                 </li>
                 <li>
-                    <a class="side-link p-0" href="#">Riwayat</a>
+                    <a class="side-link p-0 {{Request::is('dashboard/roomCheckers*') ? 'active' : ''}}" href="{{route('roomCheckers.index')}}">Pengecekan Ruangan</a>
+                </li>
+                <li>
+                    <a class="side-link p-0 {{Request::is('dashboard/reports*') ? 'active' : ''}}" href="{{route('reports.index')}}">Riwayat</a>
                 </li>
             </ul>
         @endif

@@ -2,12 +2,15 @@
 
 namespace App\Repositories;
 
+use App\Enums\Role;
 use App\Interfaces\RoomCategoryRepositoryInterface;
 use App\Interfaces\RoomCheckerRepositoryInterface;
+use App\Models\Room;
 use App\Models\RoomCategory;
 use App\Models\RoomChecker;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class RoomCheckerRepository implements RoomCheckerRepositoryInterface
 {
@@ -16,6 +19,61 @@ class RoomCheckerRepository implements RoomCheckerRepositoryInterface
     {
         // Mengambil semua tag dan mengurutkannya dari yang terbaru
         return RoomChecker::with('user_data', 'room_data')->latest()->get();
+    }
+
+    public function getByMonthAndYear($month, $year)
+    {
+        if (Auth::user()->role == Role::ADMIN) {
+            if ($month !== null && $year == null) {
+                $filteredData = RoomChecker::with('user_data', 'room_data')
+                    ->whereMonth('date', $month)
+                    ->latest()
+                    ->get();
+            } else if ($month !== null && $year !== null) {
+                $filteredData = RoomChecker::with('user_data', 'room_data')
+                    ->whereMonth('date', $month)
+                    ->whereYear('date', $year)
+                    ->latest()
+                    ->get();
+            } else if ($month == null && $year != null) {
+                $filteredData = RoomChecker::with('user_data', 'room_data')
+                    ->whereYear('date', $year)
+                    ->latest()
+                    ->get();
+            } else {
+                $filteredData = $this->getAll();
+            }
+        } else {
+            if ($month !== null && $year == null) {
+                $filteredData = RoomChecker::with('user_data', 'room_data')
+                    ->where('user_id', Auth::user()->id)
+                    ->whereMonth('date', $month)
+                    ->latest()
+                    ->get();
+            } else if ($month !== null && $year !== null) {
+                $filteredData = RoomChecker::with('user_data', 'room_data')
+                    ->where('user_id', Auth::user()->id)
+                    ->whereMonth('date', $month)
+                    ->whereYear('date', $year)
+                    ->latest()
+                    ->get();
+            } else if ($month == null && $year != null) {
+                $filteredData = RoomChecker::with('user_data', 'room_data')
+                    ->where('user_id', Auth::user()->id)
+                    ->whereYear('date', $year)
+                    ->latest()
+                    ->get();
+            } else {
+                $filteredData = RoomChecker::with('user_data', 'room_data')->where('user_id', Auth::user()->id)->latest()->get();
+            }
+        }
+
+        return $filteredData;
+    }
+
+    public function getByDate($date)
+    {
+        return RoomChecker::with('room_data')->where('date', $date)->latest()->get();
     }
 
     // Fungsi untuk mendapatkan data Tag berdasarkan ID

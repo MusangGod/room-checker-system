@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoomCategoryController;
 use App\Http\Controllers\RoomCheckerController;
 use App\Http\Controllers\RoomController;
@@ -31,13 +32,12 @@ Route::controller(AuthController::class)->middleware('guest')->prefix('auth')->g
 // Mengelompokkan Routes yang memerlukan autentikasi menggunakan middleware auth
 Route::middleware(["auth"])->prefix('/dashboard')->group(function() {
     Route::get("/", DashboardController::class)->name('dashboard');
-    Route::resource("posts", PostController::class);
-    Route::resource("tags", TagController::class);
     Route::resource("roomCategories", RoomCategoryController::class);
     Route::resource("roomCheckers", RoomCheckerController::class);
     Route::get('/roomCheckers/create/{room_id}', [RoomCheckerController::class, 'create'])->name('roomCheckers.create');
     Route::get('/roomCheckers/detail/{room_id}', [RoomCheckerController::class, 'detail'])->name('roomCheckers.detail');
     Route::resource("rooms", RoomController::class);
+    Route::resource("reports", ReportController::class);
     Route::resource("admins", AdminController::class);
     Route::get("admins/{admin}/json", [AdminController::class, 'showJSON']);
     Route::resource("staffs", StaffController::class);
