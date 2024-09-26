@@ -14,6 +14,8 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
+Route::get("/", function () {return redirect('/dashboard');});
+
 // Mengelompokkan Routes yang menggunakan AuthController
 Route::controller(AuthController::class)->middleware('guest')->prefix('auth')->group(function() {
     // Route untuk view login
@@ -36,6 +38,7 @@ Route::middleware(["auth"])->prefix('/dashboard')->group(function() {
     Route::resource("roomCheckers", RoomCheckerController::class);
     Route::get('/roomCheckers/create/{room_id}', [RoomCheckerController::class, 'create'])->name('roomCheckers.create');
     Route::get('/roomCheckers/detail/{room_id}', [RoomCheckerController::class, 'detail'])->name('roomCheckers.detail');
+    Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
     Route::resource("rooms", RoomController::class);
     Route::resource("reports", ReportController::class);
     Route::resource("admins", AdminController::class);

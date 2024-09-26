@@ -9,7 +9,7 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				'main':'#6562E8',
+				'main':'#0F207C',
 				'second': '#141414',
 				// 'third' : '#EFF3F4',
 				'desc' : '#28242185',
@@ -35,4 +35,3 @@ export default {
 		// require('flowbite/plugin')
 	],
 }
-  

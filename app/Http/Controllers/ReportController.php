@@ -2,33 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Room\StoreRoomRequest;
-use App\Http\Requests\Room\UpdateRoomRequest;
-use App\Http\Requests\RoomCategory\StoreRoomCategoryRequest;
-use App\Http\Requests\RoomCategory\UpdateRoomCategoryRequest;
-use App\Http\Requests\RoomChecker\StoreRoomCheckerRequest;
-use App\Http\Requests\RoomChecker\UpdateRoomCheckerRequest;
-use App\Http\Requests\Tag\StoreTagRequest;
-use App\Http\Requests\Tag\UpdateTagRequest;
-use App\Interfaces\RoomCategoryRepositoryInterface;
+use App\Exports\RoomCheckerExport;
 use App\Interfaces\RoomCheckerRepositoryInterface;
 use App\Interfaces\RoomRepositoryInterface;
-use App\Interfaces\TagRepositoryInterface;
-use App\Models\Room;
-use App\Models\RoomCategory;
-use App\Models\RoomChecker;
-use App\Models\Tag;
-use App\Utils\UploadFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
     public function __construct(
         private readonly RoomRepositoryInterface $roomRepositoryInterface,
         private readonly RoomCheckerRepositoryInterface $roomCheckerRepositoryInterface,
-        private readonly UploadFile $uploadFile,
     ) {
     }
 
@@ -40,8 +25,22 @@ class ReportController extends Controller
         $month = $request['month'];
         $year = $request['year'];
         $roomChecker = $this->roomCheckerRepositoryInterface->getByMonthAndYear($request['month'], $request['year']);
+        session(['roomChecker' => $roomChecker, 'month' => $month, 'year' => $year]);
+//        dd($this->roomChecker);
         // Mengirim respon sukses dengan data tag
         return view('dashboard.reports.index', compact('roomChecker', 'month', 'year'));
+    }
+
+    public function export()
+    {
+        $roomChecker = session('roomChecker');
+        $request = ['month' => session('month'), 'year' => session('year')];
+        if (!$roomChecker) {
+            return view('dashboard.reports.index')->with('error', 'Data pengecekan ruangan tidak ada.');
+        }
+//        $filePath = 'exports/data-pengecekan-ruangan.xlsx';
+//        $excel = Excel::download(new RoomCheckerExport($roomChecker), 'data-pengecekan-ruangan.xlsx');
+        return  Excel::download(new RoomCheckerExport($roomChecker), 'data-pengecekan-ruangan.xlsx');
     }
 
     public function detail(Request $request)

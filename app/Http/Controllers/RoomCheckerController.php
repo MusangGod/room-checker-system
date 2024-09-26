@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use App\Http\Requests\Room\StoreRoomRequest;
 use App\Http\Requests\Room\UpdateRoomRequest;
 use App\Http\Requests\RoomCategory\StoreRoomCategoryRequest;
@@ -40,6 +41,7 @@ class RoomCheckerController extends Controller
         if ($request['date'] == null) {
             $request['date'] = date('Y-m-d');
         }
+        $date = $request['date'];
         // Mengambil semua data tag melalui repository
         $rooms = $this->roomRepositoryInterface->getAll();
 //        $roomCheckhers = $this->roomCheckerRepositoryInterface->getAll();
@@ -54,7 +56,9 @@ class RoomCheckerController extends Controller
             foreach ($roomCheck as $check) {
                 if ($check->room_data->id == $room->id) {
                     $staffRooms[] = (object)[
+                        'room_id' => $room->id,
                         'name' => $room->name,
+                        'room_check_id' => $check->id,
                         'category' => $room->room_category->name,
                         'status' => $check->status,
                     ];
@@ -65,6 +69,8 @@ class RoomCheckerController extends Controller
             // Jika pengecekan tidak ditemukan, set status menjadi 'belum'
             if (!$foundCheck) {
                 $staffRooms[] = (object)[
+                    'room_id' => $room->id,
+                    'room_check_id' => 'none',
                     'name' => $room->name,
                     'category' => $room->room_category->name,
                     'status' => 'belum',
@@ -74,7 +80,7 @@ class RoomCheckerController extends Controller
 
 
         // Mengirim respon sukses dengan data tag
-        return view('dashboard.roomCheckers.index', compact('rooms', 'roomCheck', 'staffRooms'));
+        return view('dashboard.roomCheckers.index', compact('rooms', 'roomCheck', 'staffRooms', 'date'));
     }
 
     public function detail($id)
@@ -126,7 +132,11 @@ class RoomCheckerController extends Controller
             $newRoomChecker['user_id'] = Auth::user()->id;
             $roomChecker = $this->roomCheckerRepositoryInterface->store($newRoomChecker);
             DB::commit();
-            return redirect()->route('roomCheckers.detail', $request['room_id'])->with('success', 'Pengecekan ruangan berhasil ditambahkan');
+            if (Auth::user()->role == Role::ADMIN) {
+                return redirect()->route('roomCheckers.detail', $request['room_id'])->with('success', 'Pengecekan ruangan berhasil ditambahkan');
+            } else {
+                return redirect()->route('roomCheckers.index')->with('success', 'Pengecekan ruangan berhasil ditambahkan');
+            }
         } catch (\Exception $ex) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollBack();
@@ -164,6 +174,7 @@ class RoomCheckerController extends Controller
         DB::beginTransaction();
         try {
             $updateRoomChecker = $request->validated();
+            $updateRoomChecker['user_id'] = Auth::user()->id;
             if($request->has('image')) {
                 $this->uploadFile->deleteExistFile($roomChecker->image);
                 $filename = $this->uploadFile->uploadSingleFile($updateRoomChecker["image"], "roomCheckers");

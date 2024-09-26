@@ -22,21 +22,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        $super_admin = User::create([
-            "username" => "super_admin1",
-            "email" => "super.admin@gmail.com",
-            "password" => bcrypt("123456"),
-            "role" => Role::SUPER_ADMIN
-        ]);
-        $get_user_super_admin = User::where('username', $super_admin->username)->first();
-
-        SuperAdmin::create([
-            "user_id" => $get_user_super_admin->id,
-            "name" => "Super Admin"
-        ]);
-
         $admin = User::create([
             "username" => "admin1",
             "email" => "admin@gmail.com",
@@ -63,30 +48,5 @@ class DatabaseSeeder extends Seeder
             "name" => "Staff 1",
             "staff_number" => "123456"
         ]);
-
-        $post = Post::create([
-            "title" => "Post 1",
-            "slug" => "post-1",
-            "content" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ipsum ac nisi tincidunt feugiat. Sed vel ipsum ac nisi tincidunt feugiat.",
-            "user_id" => $get_user_staff->id,
-            "status" => PostStatus::PUBLISHED
-        ]);
-
-        Tag::create([
-            "name" => "Entertainment",
-            "slug" => "entertainment"
-        ]);
-        Tag::create([
-            "name" => "Sport",
-            "slug" => "sport"
-        ]);
-        Tag::create([
-            "name" => "Academic",
-            "slug" => "academic"
-        ]);
-
-        $get_tags = Tag::all()->pluck('id');
-
-        $post->tags()->attach($get_tags);
     }
 }

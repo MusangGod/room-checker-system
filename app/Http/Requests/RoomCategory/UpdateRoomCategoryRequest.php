@@ -30,7 +30,7 @@ class UpdateRoomCategoryRequest extends FormRequest
             // - wajib diisi
             // - harus unik di tabel "tags" pada kolom "name", kecuali untuk tag dengan ID yang sedang diedit
             //   (pengecualian ini diperlukan agar tidak terjadi kesalahan validasi saat memperbarui tag dengan nama yang sama)
-            "name" => "required|unique:room_categories,name," . $this->roomCategory->id,
+            "name" => "required",
         ];
     }
 }

@@ -2,7 +2,7 @@
 @php
     function changeStatus($status): string
     {
-        $newStatus = '';
+//        $newStatus = '';
         if ($status == 'done'){
             $newStatus = 'selesai';
         } else if ($status == 'on_progress') {
@@ -76,11 +76,11 @@
         @else
             <form method="get" class="flex gap-3 items-center">
                 <input value="{{$date ?? '' }}" name="date" type="date" class="input-crud w-[250px]">
-                <button class="btn btn-primary" type="submit">Cari</button>
+                <button class="button btn-main" type="submit">Cari</button>
             </form>
             <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mt-4">
                 @forelse($staffRooms as $item)
-                    <div class="card-room px-5 py-4 shadow-lg rounded">
+                    <div class="card-room px-5 py-4 shadow-lg rounded border-t-[10px] border-t-main">
                         <h6 class="text-center text-second mb-0">Ruangan {{$item->category}}</h6>
                         <h3 class="text-center text-second mt-2">{{$item->name}}</h3>
                         <div class="flex gap-3 justify-center">
@@ -90,6 +90,13 @@
                                 </span>
                             </h5>
                         </div>
+                        @if($item->status != 'belum')
+                            <div class="mt-6">
+                                <a href="{{route('roomCheckers.edit', $item->room_check_id)}}" class="">
+                                    <button class="button btn-main w-full">Edit</button>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 @empty
                     <h2 class="text-center">data kosong</h2>

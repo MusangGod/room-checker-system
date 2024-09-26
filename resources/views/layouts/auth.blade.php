@@ -87,7 +87,7 @@
 		<div class="grid grid-cols-12 gap-6 items-center h-full min-h-screen">
             <div class="lg:col-span-6 lg:flex hidden items-end h-full">
                 <div class="login-img h-screen ">
-                    <img src="{{asset('assets/img/login/login-img.svg')}}" class="h-screen aspect-[5/4] object-cover" alt="">
+                    <img src="{{asset('assets/img/login/login-img.svg')}}" class="h-screen aspect-[36012/51251] object-cover" alt="">
                 </div>
             </div>
 			<div class="lg:col-span-6 col-span-12  justify-center">

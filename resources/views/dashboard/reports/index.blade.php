@@ -27,7 +27,7 @@
                     <option value="11" {{ (collect($month)->contains(11)) ? 'selected' : '' }}>November</option>
                     <option value="12" {{ (collect($month)->contains(12)) ? 'selected' : '' }}>Desember</option>
                 </select>
-                <button class="btn btn-primary" type="submit">Cari</button>
+                <button class="button btn-main" type="submit">Cari</button>
             </form>
         </div>
         <div class="mt-[32px]">
@@ -77,6 +77,11 @@
                 @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="mt-4">
+            <a href="{{route('reports.export')}}">
+                <button class="button btn-main">Export</button>
+            </a>
         </div>
     </div>
 @endsection
