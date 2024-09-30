@@ -29,7 +29,7 @@ class StoreRoomCategoryRequest extends FormRequest
             // Aturan untuk field "name":
             // - wajib diisi
             // - harus unik di tabel "tags" pada kolom "name"
-            "name" => "required|unique:tags,name",
+            "name" => "required|unique:room_categories,name",
         ];
     }
 }

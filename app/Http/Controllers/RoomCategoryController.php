@@ -59,11 +59,11 @@ class RoomCategoryController extends Controller
         DB::beginTransaction();
         try {
             // Memvalidasi request dan menyimpan data baru ke dalam variabel
-            $newTag = $request->validated();
+            $newRoomCategory = $request->validated();
             // Mengatur slug berdasarkan nama tag
-            $newTag["slug"] = str()->slug($newTag["name"]);
+            $newRoomCategory["slug"] = str()->slug($newRoomCategory["name"]);
             // Menyimpan tag baru melalui repository
-            $post = $this->roomCategoryRepositoryInterface->store($newTag);
+            $roomCategory = $this->roomCategoryRepositoryInterface->store($newRoomCategory);
 
             // Komit transaksi jika berhasil
             DB::commit();
@@ -73,7 +73,7 @@ class RoomCategoryController extends Controller
             // Rollback transaksi jika terjadi kesalahan
             DB::rollBack();
             logger($ex->getMessage());
-            return back()->with('error', 'Kategori ruangan gagal ditambahkan');
+            return back()->with('error', 'Kategori kategori ruangan gagal ditambahkan');
         }
     }
 
