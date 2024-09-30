@@ -8,6 +8,16 @@
         <form class="grid grid-cols-12 gap-4" enctype="multipart/form-data">
             <input type="hidden" name="room_id" value="{{$room->id}}">
             <div class="col-span-12 flex flex-col">
+                <label for="user" class="text-second mb-1">Pengguna</label>
+                <input disabled type="text" class="input-crud" id="user" value="{{ $roomChecker->user_data->email }}"
+                       placeholder="Masukkan Nama Kategori Ruangan..." required />
+            </div>
+            <div class="col-span-12 flex flex-col">
+                <label for="user" class="text-second mb-1">Waktu Diubah</label>
+                <input disabled type="{{$roomChecker->updated_at == $roomChecker->created_at ? 'text' : 'datetime-local'}}" class="input-crud" id="user" value="{{ $roomChecker->updated_at == $roomChecker->created_at ? '-' : $roomChecker->updated_at }}"
+                       placeholder="Masukkan Nama Kategori Ruangan..." required />
+            </div>
+            <div class="col-span-12 flex flex-col">
                 <label for="name" class="text-second mb-1">Nama Ruangan</label>
                 <input disabled type="text" class="input-crud" id="name" value="{{ $room->name }}"
                        placeholder="Masukkan Nama Kategori Ruangan..." required />

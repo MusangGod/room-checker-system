@@ -96,6 +96,12 @@
                                     <button class="button btn-main w-full">Edit</button>
                                 </a>
                             </div>
+                        @else
+                            <div class="mt-6">
+                                <a href="{{route('roomCheckers.create', $item->room_id)}}" class="">
+                                    <button class="button btn-main w-full">Cek Ruangan</button>
+                                </a>
+                            </div>
                         @endif
                     </div>
                 @empty

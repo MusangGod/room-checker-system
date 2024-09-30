@@ -30,7 +30,7 @@
                 <div class="text-danger mt-1">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-span-12 flex flex-col">
+            <div class="md:col-span-6 col-span-12 flex flex-col">
                 <label for="image" class="text-second mb-1">Foto Ruangan</label>
                 <label for="image" class="d-block mb-3">
                     @if ($room->image)
@@ -41,12 +41,18 @@
                              width="300" alt="">
                     @endif
                 </label>
-                <input disabled type="file" id="image" name="image"
-                       class="input-crud py-0 input hidden" />
-                <label for="image" class="button btn-second text-center w-[300px]">Upload File</label>
-                @error('image')
-                <div class="text-danger mt-1">{{ $message }}</div>
-                @enderror
+            </div>
+            <div class="md:col-span-6 col-span-12 flex flex-col">
+                <label for="image" class="text-second mb-1">QR Code Ruangan</label>
+                <label for="image" class="d-block mb-3">
+                    @if ( asset('storage/qrcodes/room-' . $room->id . '.png'))
+                        <img src="{{  asset('storage/qrcodes/room-' . $room->id . '.png') }}"
+                             class="preview-img border" alt="">
+                    @else
+                        <img src="{{ asset('assets/img/upload-image.jpg') }}" class="preview-img border"
+                             width="300" alt="">
+                    @endif
+                </label>
             </div>
         </form>
         <div class="col-span-12 flex items-center gap-3 mt-5">
