@@ -3,6 +3,7 @@
 @section('main')
 
     <div class="table-wrapper mt-[20px] input-teacher">
+
         <form action="{{ route('staffs.store') }}" method="post" enctype="multipart/form-data" class="grid grid-cols-12 gap-4">
             @csrf
             <div class="col-span-12 md:col-span-6 flex flex-col">

@@ -33,8 +33,8 @@
                     <tr>
                         <th>#</th>
                         <th>Nama</th>
-                        <th>Kategori</th>
-                        <th>Status</th>
+                        <th class="md:table-cell hidden">Kategori</th>
+                        <th class="md:table-cell hidden">Status</th>
                         <th>Aksi</th>
                     </tr>
                     </thead>
@@ -44,8 +44,8 @@
                             <input type="hidden" class="item_id" value="{{ $item->id }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->room_category->name }}</td>
-                            <td>{{ $item->status }}</td>
+                            <td class="md:table-cell hidden">{{ $item->room_category->name }}</td>
+                            <td class="md:table-cell hidden">{{ $item->status }}</td>
                             <td>
                                 <div class="flex gap-2 items-center">
                                     <a href="{{ route('roomCheckers.detail', $item->id) }}"  class="icon-table icon-detail">

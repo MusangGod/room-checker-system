@@ -32,9 +32,9 @@
         <tr>
             <th>#</th>
             <th>Tanggal</th>
-            <th>Jam</th>
-            <th class="lg:table-cell">Status</th>
-            <th class="lg:table-cell">Pengguna</th>
+            <th class="md:table-cell hidden">Jam</th>
+            <th class="md:table-cell hidden">Status</th>
+            <th class="md:table-cell hidden">Pengguna</th>
             <th>Aksi</th>
         </tr>
         </thead>
@@ -43,10 +43,10 @@
         <tr class="table-body">
             <input type="hidden" class="post_id" value="{{ $item->id }}">
             <td>{{ $loop->index+1 }}</td>
-            <td>{{ $item->date }}</td>
-            <td>{{ $item->time }}</td>
-            <td>{{ $item->status }}</td>
-            <td>{{ $item->user_data->email }}</td>
+            <td >{{ $item->date }}</td>
+            <td class="md:table-cell hidden">{{ $item->time }}</td>
+            <td class="md:table-cell hidden">{{ $item->status }}</td>
+            <td class="md:table-cell hidden">{{ $item->user_data->email }}</td>
             <td>
                 <div class="flex gap-2 items-center">
                     <a href="{{ route('roomCheckers.show', $item->id) }}"  class="icon-table icon-detail">

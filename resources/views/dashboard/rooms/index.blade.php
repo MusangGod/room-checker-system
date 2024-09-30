@@ -36,9 +36,9 @@
                     <tr>
                         <th>#</th>
                         <th>Nama</th>
-                        <th>Kategori</th>
-                        <th>Status</th>
-                        <th>QR Code Ruangan</th>
+                        <th class="md:table-cell hidden">Kategori</th>
+                        <th class="md:table-cell hidden">Status</th>
+                        <th class="md:table-cell hidden">QR Code Ruangan</th>
                         <th>Aksi</th>
                     </tr>
                     </thead>
@@ -48,10 +48,10 @@
                             <input class="item_id" type="hidden" value="{{$item->id}}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->room_category->name }}</td>
-                            <td>{{ $item->status }}</td>
-                            <td>
-                                <img src="{{ asset('storage/qrcodes/room-' . $item->id . '.png') }}" alt="QR Code for Room">
+                            <td class="md:table-cell hidden">{{ $item->room_category->name }}</td>
+                            <td class="md:table-cell hidden">{{ $item->status }}</td>
+                            <td class="md:table-cell hidden">
+                                <img class="aspect-square max-w-24 max-h-24 " src="{{ asset('storage/qrcodes/room-' . $item->id . '.png') }}" alt="QR Code for Room">
                             </td>
                             <td>
                                 <div class="flex gap-2 items-center">

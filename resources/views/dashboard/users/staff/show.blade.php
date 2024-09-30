@@ -13,7 +13,8 @@
 					disabled
 				/>
 			</div>
-				<label for="nama" class="text-second mb-1">Nomor Pegawai</label>
+            <div class="col-span-12 md:col-span-6 flex flex-col">
+            <label for="nama" class="text-second mb-1">Nomor Pegawai</label>
 				<input
 					type="text"
 				 	class="input-crud"
@@ -30,7 +31,7 @@
 					disabled
 				>
 			</div>
-			<div class="col-span-12 flex flex-col">
+			<div class="col-span-12 md:col-span-6 flex flex-col">
 				<label for="email" class="text-second mb-1">Email</label>
 				<input
 					type="text"

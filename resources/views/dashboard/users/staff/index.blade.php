@@ -33,11 +33,11 @@
             <table class="dataTable w-full ">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th class="md:table-cell">Nama</th>
+                    <th class="md:table-cell hidden">#</th>
+                    <th class="md:table-cell hidden">Nama</th>
                     <th class="md:table-cell">Username</th>
-                    <th class="lg:table-cell">Email</th>
-                    <th class="lg:table-cell">Nomor Pegawai</th>
+                    <th class="lg:table-cell hidden">Email</th>
+                    <th class="lg:table-cell hidden">Nomor Pegawai</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
@@ -45,11 +45,11 @@
                 @forelse($staffs as $item)
                     <tr class="table-body">
                         <input type="hidden" class="staff_id" value="{{ $item->id }}">
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->name }}</td>
+                        <td class="md:table-cell hidden">{{ $loop->iteration }}</td>
+                        <td class="md:table-cell hidden">{{ $item->name }}</td>
                         <td class="md:table-cell">{{ $item->user->username }}</td>
-                        <td class="md:table-cell">{{ $item->user->email }}</td>
-                        <td class="md:table-cell">{{ $item->staff_number }}</td>
+                        <td class="md:table-cell hidden">{{ $item->user->email }}</td>
+                        <td class="md:table-cell hidden">{{ $item->staff_number }}</td>
                         <td>
                             <div class="flex gap-2 items-center">
 

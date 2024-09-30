@@ -9,7 +9,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>@yield('title') | Manajemen Surat Desa</title>
+    <title>@yield('title') | Pengecekan Ruangan</title>
 
     <meta name="description" content="" />
 
@@ -28,6 +28,7 @@
     <!-- Core CSS -->
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/css/topbar.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="/assets/css/demo.css" />
 

@@ -2,7 +2,7 @@
 @section('title', 'Laporan Pengecekan Ruangan')
 @section('main')
     <div class="table-wrapper mt-[20px] input-teacher">
-        <div class="flex justify-between items-center gap-3 mt-4">
+        <div class="flex md:flex-row flex-col justify-between items-center gap-3 mt-4">
             <div class="input-wrapper flex gap-2 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path d="M9.75 4.875C9.75 5.95078 9.40078 6.94453 8.8125 7.75078L11.7797 10.7203C12.0727 11.0133 12.0727 11.4891 11.7797 11.782C11.4867 12.075 11.0109 12.075 10.718 11.782L7.75078 8.8125C6.94453 9.40312 5.95078 9.75 4.875 9.75C2.18203 9.75 0 7.56797 0 4.875C0 2.18203 2.18203 0 4.875 0C7.56797 0 9.75 2.18203 9.75 4.875ZM4.875 8.25C5.31821 8.25 5.75708 8.1627 6.16656 7.99309C6.57603 7.82348 6.94809 7.57488 7.26149 7.26149C7.57488 6.94809 7.82348 6.57603 7.99309 6.16656C8.1627 5.75708 8.25 5.31821 8.25 4.875C8.25 4.43179 8.1627 3.99292 7.99309 3.58344C7.82348 3.17397 7.57488 2.80191 7.26149 2.48851C6.94809 2.17512 6.57603 1.92652 6.16656 1.75691C5.75708 1.5873 5.31821 1.5 4.875 1.5C4.43179 1.5 3.99292 1.5873 3.58344 1.75691C3.17397 1.92652 2.80191 2.17512 2.48851 2.48851C2.17512 2.80191 1.92652 3.17397 1.75691 3.58344C1.5873 3.99292 1.5 4.43179 1.5 4.875C1.5 5.31821 1.5873 5.75708 1.75691 6.16656C1.92652 6.57603 2.17512 6.94809 2.48851 7.26149C2.80191 7.57488 3.17397 7.82348 3.58344 7.99309C3.99292 8.1627 4.43179 8.25 4.875 8.25Z"
@@ -11,8 +11,8 @@
                 <input type="search" class="searchInputTable w-full focus:ring-0 focus:outline-none" placeholder="Cari data pengecekan ruangan ...">
             </div>
             <form method="get" class="flex gap-3 items-center justify-end">
-                <input value="{{$year ?? '' }}" name="year" type="number" min="1900" max="2100" class="input-crud w-[170px]" placeholder="input tahun">
-                <select name="month" id="month" required style="width: 170px !important;">
+                <input value="{{$year ?? '' }}" name="year" type="number" min="1900" max="2100" class="input-crud md:w-[170px]" placeholder="input tahun">
+                <select name="month" id="month" required class="filter-select">
                     <option selected disabled>Pilih Bulan</option>
                     <option value="1" {{ (collect($month)->contains(1)) ? 'selected' : '' }}>Januari</option>
                     <option value="2" {{ (collect($month)->contains(2)) ? 'selected' : '' }}>Februari</option>
@@ -30,15 +30,15 @@
                 <button class="button btn-main" type="submit">Cari</button>
             </form>
         </div>
-        <div class="mt-[32px]">
+        <div class="mt-[32px] w-full">
             <table class="dataTable w-full ">
                 <thead>
                 <tr>
-                    <th>#</th>
+                    <th class="md:table-cell hidden">#</th>
                     <th>Tanggal</th>
                     <th>Ruangan</th>
-                    <th class="lg:table-cell">Status</th>
-                    <th class="lg:table-cell">Pengguna</th>
+                    <th class="md:table-cell hidden">Status</th>
+                    <th class="md:table-cell hidden">Pengguna</th>
                     <th>Aksi</th>
                 </tr>
                 </thead>
@@ -46,11 +46,11 @@
                 @forelse($roomChecker as $item)
                     <tr class="table-body">
                         <input type="hidden" class="post_id" value="{{ $item->id }}">
-                        <td>{{ $loop->index+1 }}</td>
+                        <td class="md:table-cell hidden">{{ $loop->index+1 }}</td>
                         <td>{{ $item->date }}</td>
                         <td>{{ $item->room_data->name }}</td>
-                        <td>{{ $item->status }}</td>
-                        <td>{{ $item->user_data->email }}</td>
+                        <td class="md:table-cell hidden">{{ $item->status }}</td>
+                        <td class="md:table-cell hidden">{{ $item->user_data->email }}</td>
                         <td>
                             <div class="flex gap-2 items-center">
                                 <a href="{{ route('roomCheckers.show', $item->id) }}"  class="icon-table icon-detail">

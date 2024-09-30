@@ -316,4 +316,11 @@
         }
     }
 }
-
+@media (max-width: 400px) {
+    .filter-select {
+        max-width: 100px !important;
+    }
+}
+.filter-select {
+    width: 170px !important;
+}
