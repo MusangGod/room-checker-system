@@ -70,7 +70,6 @@
         document.getElementById('downloadBtn').addEventListener('click', () => {
             const imgElement = document.getElementById('qrImage');
             const imgUrl = imgElement.src;
-            console.log(imgUrl)
             const downloadImage = (url, fileName) => {
                 const a = document.createElement('a');
                 a.href = url;
