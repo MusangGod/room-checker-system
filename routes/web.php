@@ -40,6 +40,7 @@ Route::middleware(["auth"])->prefix('/dashboard')->group(function() {
     Route::get('/roomCheckers/detail/{room_id}', [RoomCheckerController::class, 'detail'])->name('roomCheckers.detail');
     Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
     Route::resource("rooms", RoomController::class);
+    Route::get('/rooms/qrcode/download/{file}/{room_id}', [RoomController::class, 'download'])->name('rooms.download');
     Route::resource("reports", ReportController::class);
     Route::resource("admins", AdminController::class);
     Route::get("admins/{admin}/json", [AdminController::class, 'showJSON']);

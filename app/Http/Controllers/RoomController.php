@@ -163,4 +163,9 @@ class RoomController extends Controller
             return back()->with('error', 'kategori ruangan gagal dihapus');
         }
     }
+    public function download($path, $id)
+        {
+            $this->show($id);
+            return response()->download($path);
+        }
 }

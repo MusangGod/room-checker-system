@@ -53,6 +53,9 @@
                              width="300" alt="">
                     @endif
                 </label>
+                <a href="{{route('rooms.download', ['file' => asset('storage/qrcodes/room-' . $room->id . '.png') ,'room_id' => $room->id])}}" class="button btn-main">
+                    Downlaod
+                </a>
             </div>
         </form>
         <div class="col-span-12 flex items-center gap-3 mt-5">
