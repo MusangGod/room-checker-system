@@ -13,9 +13,6 @@ id="layout-navbar">
                     <a class="side-link p-0 {{Request::is('dashboard') ? 'active' : ''}}" href="{{route('dashboard')}}">Beranda</a>
                 </li>
                 <li>
-                    <a class="side-link p-0 {{Request::is('dashboard/rooms*') ? 'active' : ''}}" href="{{route('rooms.index')}}">Ruangan</a>
-                </li>
-                <li>
                     <a class="side-link p-0 {{Request::is('dashboard/roomCheckers*') ? 'active' : ''}}" href="{{route('roomCheckers.index')}}">Pengecekan Ruangan</a>
                 </li>
                 <li>
