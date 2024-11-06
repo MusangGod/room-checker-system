@@ -7,7 +7,9 @@ id="layout-navbar">
             <h1 class="text-2xl opacity-100 text-second m-0">@yield('title')</h1>
         @endif
         @if(auth()->user()->role == App\Enums\Role::STAFF)
-                <img src="{{@asset('assets/img/logo.svg')}}" alt="logo">
+                <a href="{{route('dashboard')}}" class="flex justify-center w-full text-[20px] font-bold">
+                    pengecekan ruangan
+                </a>
                 <ul class="flex gap-3 mb-0">
                 <li>
                     <a class="side-link p-0 {{Request::is('dashboard') ? 'active' : ''}}" href="{{route('dashboard')}}">Beranda</a>
